@@ -1,0 +1,35 @@
+{
+    "name": "Specialization",
+    "fields": [
+        {
+            "fieldName": "note",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "employee",
+            "otherEntityRelationshipName": "specialization",
+            "relationshipName": "employee",
+            "otherEntityField": "lastName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "service",
+            "otherEntityRelationshipName": "specialization",
+            "relationshipName": "service",
+            "otherEntityField": "title"
+        }
+    ],
+    "changelogDate": "20191215110156",
+    "entityTableName": "specialization",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

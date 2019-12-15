@@ -1,0 +1,139 @@
+entity Region {
+	regionName String required
+}
+
+entity Country {
+	countryName String required
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Location {
+	address String required,
+	postalCode String,
+	city String required,
+	stateProvince String
+}
+
+entity Salon {
+	title String required
+}
+
+/**
+ * The Employee entity.
+ */
+entity Employee {
+	firstName String required,
+	lastName String required,
+	email String required,
+	phoneNumber String required,
+	hireDate Instant required,
+	salary Long required,
+	commissionPct Long required
+}
+
+entity Service {
+	title String required,
+	price Long required
+}
+
+entity Order {
+	date Instant
+}
+
+entity ServiceProvided {
+   startDate Instant,
+   endDate Instant,
+   note String
+}
+
+entity Material {
+   title String required,
+   unit Unit required,
+   price BigDecimal required,
+}
+
+entity MaterialInSalon {
+   count Integer required,
+}
+
+entity UsedMaterial {
+   count Integer required,
+   decommission Boolean
+}
+
+entity Specialization {
+	note String
+}
+
+entity Client {
+	firstName String required,
+	lastName String required,
+    email String,
+	phoneNumber String required,
+    sex Sex required       
+}
+
+enum Sex {
+    MAN, WOMAN
+}
+
+enum Unit {
+    METER, KILOGRAM
+}
+
+relationship OneToOne {
+	Country{region(regionName)} to Region
+}
+
+relationship OneToOne {
+	Location{country(countryName)} to Country
+}
+
+relationship OneToOne {
+	Salon{location} to Location
+}
+
+relationship ManyToOne {
+	Employee{manager(lastName)} to Employee
+}
+
+relationship ManyToOne {
+	Employee{salon(title)} to Salon
+}
+
+relationship ManyToOne {
+	Specialization{employee(lastName)} to Employee,
+    Specialization{service(title)} to Service
+}
+
+relationship ManyToOne {
+	ServiceProvided{order} to Order,
+    ServiceProvided{employee(lastName)} to Employee,
+    ServiceProvided{service(title)} to Service
+}
+
+relationship ManyToOne {
+	MaterialInSalon{material(title)} to Material
+	MaterialInSalon{salon(title)} to Salon,
+    UsedMaterial{order} to Order,
+    UsedMaterial{material(title)} to Material,
+    UsedMaterial{employee(lastName)} to Employee
+}
+
+// defining multiple oneToOne relationships
+relationship ManyToOne {
+    Order{client(lastName)} to Client
+}
+
+// Set pagination options
+paginate all with pagination except Country, Region 
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

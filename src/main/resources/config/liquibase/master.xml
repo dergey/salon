@@ -14,6 +14,28 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110145_added_entity_Region.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110146_added_entity_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110147_added_entity_Location.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110148_added_entity_Salon.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110149_added_entity_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110150_added_entity_Service.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110151_added_entity_Order.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110152_added_entity_ServiceProvided.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110153_added_entity_Material.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110154_added_entity_MaterialInSalon.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110155_added_entity_UsedMaterial.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110156_added_entity_Specialization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110157_added_entity_Client.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20191215110146_added_entity_constraints_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110147_added_entity_constraints_Location.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110148_added_entity_constraints_Salon.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110149_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110151_added_entity_constraints_Order.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110152_added_entity_constraints_ServiceProvided.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110154_added_entity_constraints_MaterialInSalon.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110155_added_entity_constraints_UsedMaterial.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191215110156_added_entity_constraints_Specialization.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

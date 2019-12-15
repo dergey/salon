@@ -1,0 +1,49 @@
+{
+    "name": "UsedMaterial",
+    "fields": [
+        {
+            "fieldName": "count",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "decommission",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "order",
+            "otherEntityRelationshipName": "usedMaterial",
+            "relationshipName": "order",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "material",
+            "otherEntityRelationshipName": "usedMaterial",
+            "relationshipName": "material",
+            "otherEntityField": "title"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "employee",
+            "otherEntityRelationshipName": "usedMaterial",
+            "relationshipName": "employee",
+            "otherEntityField": "lastName"
+        }
+    ],
+    "changelogDate": "20191215110155",
+    "entityTableName": "used_material",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}
