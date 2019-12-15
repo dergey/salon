@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.sergey.zhuravlev.salon"
+    },
+    "jhipsterVersion": "6.5.1",
+    "applicationType": "monolith",
+    "baseName": "salon",
+    "packageName": "com.sergey.zhuravlev.salon",
+    "packageFolder": "com/sergey/zhuravlev/salon",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "YmExMDdmMjliY2M3MzMwMzgxOTgwMTE0MjNkYjUyYjA5NjQyNzYxMTRhYTU2Y2M2NmRlZmJmZDM4NGU4OWM3M2NiMjk4OTNiMjA2YzQwNjRkM2VkOGY0ODRmZDY2ZWU2NjM1ODQwNmRjOGNiOTkxNjQ2M2UwNGM5Y2ZiZGQ1M2Y=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "react",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
