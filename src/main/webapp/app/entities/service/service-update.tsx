@@ -68,37 +68,46 @@ export class ServiceUpdate extends React.Component<IServiceUpdateProps, IService
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.service.home.createOrEditLabel">Create or edit a Service</h2>
+            <h2 id="salonApp.service.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} услугу</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : serviceEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="service-id">ID</Label>
+                    <Label for="service-id">Номер</Label>
                     <AvInput id="service-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="titleLabel" for="service-title">
-                    Title
+                    Название
                   </Label>
                   <AvField
                     id="service-title"
                     type="text"
                     name="title"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="sexLabel" for="service-client-sex">
+                    Пол
+                  </Label>
+                  <AvInput id="service-client-sex" type="select" className="form-control" name="sex" value={(!isNew && serviceEntity.sex) || 'MAN'}>
+                    <option value="MAN">муж</option>
+                    <option value="WOMAN">жен</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label id="priceLabel" for="service-price">
-                    Price
+                    Цена
                   </Label>
                   <AvField
                     id="service-price"
@@ -106,20 +115,20 @@ export class ServiceUpdate extends React.Component<IServiceUpdateProps, IService
                     className="form-control"
                     name="price"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' },
+                      number: { value: true, errorMessage: 'Это поле должно быть числом.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/service" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

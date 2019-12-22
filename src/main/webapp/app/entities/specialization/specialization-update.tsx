@@ -79,42 +79,36 @@ export class SpecializationUpdate extends React.Component<ISpecializationUpdateP
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.specialization.home.createOrEditLabel">Create or edit a Specialization</h2>
+            <h2 id="salonApp.specialization.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} специализацию</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : specializationEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="specialization-id">ID</Label>
+                    <Label for="specialization-id">Номер</Label>
                     <AvInput id="specialization-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="noteLabel" for="specialization-note">
-                    Note
-                  </Label>
-                  <AvField id="specialization-note" type="text" name="note" />
-                </AvGroup>
-                <AvGroup>
-                  <Label for="specialization-employee">Employee</Label>
+                  <Label for="specialization-employee">Сотрудник</Label>
                   <AvInput id="specialization-employee" type="select" className="form-control" name="employee.id">
                     <option value="" key="0" />
                     {employees
                       ? employees.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.lastName}
+                            {otherEntity.lastName + ' ' + otherEntity.firstName}
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="specialization-service">Service</Label>
+                  <Label for="specialization-service">Услуга</Label>
                   <AvInput id="specialization-service" type="select" className="form-control" name="service.id">
                     <option value="" key="0" />
                     {services
@@ -126,15 +120,21 @@ export class SpecializationUpdate extends React.Component<ISpecializationUpdateP
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label id="noteLabel" for="specialization-note">
+                    Заметка
+                  </Label>
+                  <AvField id="specialization-note" type="text" name="note" />
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/specialization" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

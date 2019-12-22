@@ -16,6 +16,7 @@ import reducer, {
 } from 'app/entities/employee/employee.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IEmployee, defaultValue } from 'app/shared/model/employee.model';
+import { defaultScheduleValue } from 'app/shared/model/employee.schedule.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
@@ -30,6 +31,7 @@ describe('Entities reducer tests', () => {
     loading: false,
     errorMessage: null,
     entities: [] as ReadonlyArray<IEmployee>,
+    schedule: defaultScheduleValue,
     entity: defaultValue,
     totalItems: 0,
     updating: false,

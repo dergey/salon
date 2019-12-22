@@ -7,7 +7,7 @@ body {
 }
 
 a {
-  color: #533f03;
+  color: #0a5273;
   font-weight: bold;
 }
 
@@ -312,6 +312,26 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 // Fix checkbox alignment https://github.com/jhipster/generator-jhipster/issues/8463
 .form-check-input {
   margin-top: -0.5rem;
+}
+
+.schedule > tbody > tr > td,
+.schedule > thead > tr > th {
+  width: 14.28%;
+}
+
+.schedule .card {
+  border-radius: 0;
+  margin-bottom: 12px;
+}
+
+.schedule .card .card-body {
+  padding: 2px;
+}
+
+.schedule .placeholder {
+  background-clip: content-box;
+  border: none;
+  padding: 0 0 !important;
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

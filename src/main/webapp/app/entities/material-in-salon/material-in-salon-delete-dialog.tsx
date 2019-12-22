@@ -30,16 +30,16 @@ export class MaterialInSalonDeleteDialog extends React.Component<IMaterialInSalo
     const { materialInSalonEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="salonApp.materialInSalon.delete.question">Are you sure you want to delete this MaterialInSalon?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
+        <ModalBody id="salonApp.materialInSalon.delete.question">Вы уверены, что хотите удалить материал в салоне?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp; Отмена
           </Button>
           <Button id="jhi-confirm-delete-materialInSalon" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp; Удалить
           </Button>
         </ModalFooter>
       </Modal>

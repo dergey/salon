@@ -23,38 +23,38 @@ export class ServiceProvidedDetail extends React.Component<IServiceProvidedDetai
       <Row>
         <Col md="8">
           <h2>
-            ServiceProvided [<b>{serviceProvidedEntity.id}</b>]
+            Предоставленная услуга <b>№{serviceProvidedEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="startDate">Start Date</span>
+              <span id="startDate">Дата начала</span>
             </dt>
             <dd>
               <TextFormat value={serviceProvidedEntity.startDate} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="endDate">End Date</span>
+              <span id="endDate">Дата окончания</span>
             </dt>
             <dd>
               <TextFormat value={serviceProvidedEntity.endDate} type="date" format={APP_DATE_FORMAT} />
             </dd>
+            <dt>Заказ</dt>
+            <dd>{serviceProvidedEntity.order ? serviceProvidedEntity.order.id : ''}</dd>
+            <dt>Услуга</dt>
+            <dd>{serviceProvidedEntity.service ? serviceProvidedEntity.service.title : ''}</dd>
+            <dt>Сотрудник</dt>
+            <dd>{serviceProvidedEntity.employee ? serviceProvidedEntity.employee.lastName : ''}</dd>
             <dt>
-              <span id="note">Note</span>
+              <span id="note">Примечание</span>
             </dt>
             <dd>{serviceProvidedEntity.note}</dd>
-            <dt>Order</dt>
-            <dd>{serviceProvidedEntity.order ? serviceProvidedEntity.order.id : ''}</dd>
-            <dt>Employee</dt>
-            <dd>{serviceProvidedEntity.employee ? serviceProvidedEntity.employee.lastName : ''}</dd>
-            <dt>Service</dt>
-            <dd>{serviceProvidedEntity.service ? serviceProvidedEntity.service.title : ''}</dd>
           </dl>
           <Button tag={Link} to="/service-provided" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/service-provided/${serviceProvidedEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

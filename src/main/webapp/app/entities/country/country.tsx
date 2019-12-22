@@ -22,10 +22,10 @@ export class Country extends React.Component<ICountryProps> {
     return (
       <div>
         <h2 id="country-heading">
-          Countries
+          Страны
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Country
+            &nbsp; Создать новую страну
           </Link>
         </h2>
         <div className="table-responsive">
@@ -33,9 +33,9 @@ export class Country extends React.Component<ICountryProps> {
             <Table responsive aria-describedby="country-heading">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Country Name</th>
-                  <th>Region</th>
+                  <th>Номер</th>
+                  <th>Название страны</th>
+                  <th>Регион</th>
                   <th />
                 </tr>
               </thead>
@@ -52,13 +52,13 @@ export class Country extends React.Component<ICountryProps> {
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${country.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${country.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${country.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>

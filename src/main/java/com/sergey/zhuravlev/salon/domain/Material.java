@@ -31,7 +31,7 @@ public class Material implements Serializable {
     private Unit unit;
 
     @NotNull
-    @Column(name = "price", precision = 21, scale = 2, nullable = false)
+    @Column(name = "price", precision = 11, scale = 2, nullable = false)
     private BigDecimal price;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

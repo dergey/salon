@@ -51,10 +51,10 @@ export class UsedMaterial extends React.Component<IUsedMaterialProps, IUsedMater
     return (
       <div>
         <h2 id="used-material-heading">
-          Used Materials
+          Использованные материалы
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Used Material
+            &nbsp; Создать использованный материал
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,22 +63,22 @@ export class UsedMaterial extends React.Component<IUsedMaterialProps, IUsedMater
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('count')}>
-                    Count <FontAwesomeIcon icon="sort" />
+                    Количество <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('decommission')}>
-                    Decommission <FontAwesomeIcon icon="sort" />
+                    Списание <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Order <FontAwesomeIcon icon="sort" />
+                    Заказ <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Material <FontAwesomeIcon icon="sort" />
+                    Материал <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Employee <FontAwesomeIcon icon="sort" />
+                    Сотрудник <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -92,7 +92,7 @@ export class UsedMaterial extends React.Component<IUsedMaterialProps, IUsedMater
                       </Button>
                     </td>
                     <td>{usedMaterial.count}</td>
-                    <td>{usedMaterial.decommission ? 'true' : 'false'}</td>
+                    <td>{usedMaterial.decommission ? 'да' : 'нет'}</td>
                     <td>{usedMaterial.order ? <Link to={`order/${usedMaterial.order.id}`}>{usedMaterial.order.id}</Link> : ''}</td>
                     <td>
                       {usedMaterial.material ? <Link to={`material/${usedMaterial.material.id}`}>{usedMaterial.material.title}</Link> : ''}
@@ -107,13 +107,13 @@ export class UsedMaterial extends React.Component<IUsedMaterialProps, IUsedMater
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${usedMaterial.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${usedMaterial.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${usedMaterial.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -122,7 +122,7 @@ export class UsedMaterial extends React.Component<IUsedMaterialProps, IUsedMater
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Used Materials found</div>
+            <div className="alert alert-warning">Не найдено ни одного использованного материала</div>
           )}
         </div>
         <div className={usedMaterialList && usedMaterialList.length > 0 ? '' : 'd-none'}>

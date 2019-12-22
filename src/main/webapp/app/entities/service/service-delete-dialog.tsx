@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { IService } from 'app/shared/model/service.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './service.reducer';
 
@@ -30,16 +28,16 @@ export class ServiceDeleteDialog extends React.Component<IServiceDeleteDialogPro
     const { serviceEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="salonApp.service.delete.question">Are you sure you want to delete this Service?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
+        <ModalBody id="salonApp.service.delete.question">Вы уверены, что хотите удалить эту услугу?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp; Отменить
           </Button>
           <Button id="jhi-confirm-delete-service" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp; Удалить
           </Button>
         </ModalFooter>
       </Modal>

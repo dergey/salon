@@ -23,20 +23,20 @@ export class RegionDetail extends React.Component<IRegionDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Region [<b>{regionEntity.id}</b>]
+            Регион <b>№{regionEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="regionName">Region Name</span>
+              <span id="regionName">Название региона</span>
             </dt>
             <dd>{regionEntity.regionName}</dd>
           </dl>
           <Button tag={Link} to="/region" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/region/${regionEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

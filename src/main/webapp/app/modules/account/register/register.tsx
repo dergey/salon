@@ -26,7 +26,7 @@ export const RegisterPage = (props: IRegisterProps) => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h1 id="register-title">Registration</h1>
+          <h1 id="register-title">Регистрация</h1>
         </Col>
       </Row>
       <Row className="justify-content-center">
@@ -34,63 +34,63 @@ export const RegisterPage = (props: IRegisterProps) => {
           <AvForm id="register-form" onValidSubmit={handleValidSubmit}>
             <AvField
               name="username"
-              label="Username"
-              placeholder={'Your username'}
+              label="Имя пользователя"
+              placeholder={'Ваше имя пользователя'}
               validate={{
-                required: { value: true, errorMessage: 'Your username is required.' },
-                pattern: { value: '^[_.@A-Za-z0-9-]*$', errorMessage: 'Your username can only contain letters and digits.' },
-                minLength: { value: 1, errorMessage: 'Your username is required to be at least 1 character.' },
-                maxLength: { value: 50, errorMessage: 'Your username cannot be longer than 50 characters.' }
+                required: { value: true, errorMessage: 'Имя пользователя необходимое поле.' },
+                pattern: { value: '^[_.@A-Za-z0-9-]*$', errorMessage: 'Имя пользователя может содержать только буквы и цифры.' },
+                minLength: { value: 1, errorMessage: 'Имя пользователя должно состоять менее чем из 1 символа.' },
+                maxLength: { value: 50, errorMessage: 'Имя пользователя не должно превышать 50 символов.' }
               }}
             />
             <AvField
               name="email"
               label="Email"
-              placeholder={'Your email'}
+              placeholder={'Ваш email'}
               type="email"
               validate={{
-                required: { value: true, errorMessage: 'Your email is required.' },
-                minLength: { value: 5, errorMessage: 'Your email is required to be at least 5 characters.' },
-                maxLength: { value: 254, errorMessage: 'Your email cannot be longer than 50 characters.' }
+                required: { value: true, errorMessage: 'Email необходимое поле.' },
+                minLength: { value: 5, errorMessage: 'Ваш адрес электронной почты должен содержать не менее 5 символов.' },
+                maxLength: { value: 254, errorMessage: 'Длина сообщения электронной почты не должна превышать 50 символов.' }
               }}
             />
             <AvField
               name="firstPassword"
-              label="New password"
-              placeholder={'New password'}
+              label="Пароль"
+              placeholder={'Новый пароль'}
               type="password"
               onChange={updatePassword}
               validate={{
-                required: { value: true, errorMessage: 'Your password is required.' },
-                minLength: { value: 4, errorMessage: 'Your password is required to be at least 4 characters.' },
-                maxLength: { value: 50, errorMessage: 'Your password cannot be longer than 50 characters.' }
+                required: { value: true, errorMessage: 'Пароль необходимое поле.' },
+                minLength: { value: 4, errorMessage: 'Ваш пароль должен состоять не менее чем из 4 символов.' },
+                maxLength: { value: 50, errorMessage: 'Ваш пароль не должен превышать 50 символов.' }
               }}
             />
             <PasswordStrengthBar password={password} />
             <AvField
               name="secondPassword"
-              label="New password confirmation"
-              placeholder="Confirm the new password"
+              label="Подтверждение пароля"
+              placeholder="Подтверждение пароля"
               type="password"
               validate={{
-                required: { value: true, errorMessage: 'Your confirmation password is required.' },
-                minLength: { value: 4, errorMessage: 'Your confirmation password is required to be at least 4 characters.' },
-                maxLength: { value: 50, errorMessage: 'Your confirmation password cannot be longer than 50 characters.' },
-                match: { value: 'firstPassword', errorMessage: 'The password and its confirmation do not match!' }
+                required: { value: true, errorMessage: 'Повторение пароля необходимое поле.' },
+                minLength: { value: 4, errorMessage: 'Ваш подтверждающий пароль должен состоять не менее чем из 4 символов.' },
+                maxLength: { value: 50, errorMessage: 'Ваш подтверждающий пароль не должен превышать 50 символов.' },
+                match: { value: 'firstPassword', errorMessage: 'Пароль и его подтверждение не совпадают!' }
               }}
             />
             <Button id="register-submit" color="primary" type="submit">
-              Register
+              Зарегистрироваться
             </Button>
           </AvForm>
           <p>&nbsp;</p>
           <Alert color="warning">
-            <span>If you want to</span>
-            <a className="alert-link"> sign in</a>
+            <span>Если вы хотите</span>
+            <a className="alert-link"> войти</a>
             <span>
-              , you can try the default accounts:
-              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-              <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
+              , вы можете попробовать учетные записи по умолчанию:
+              <br />- Администратор (логин=&quot;admin&quot; и пароль=&quot;admin&quot;)
+              <br />- Пользователь (логин=&quot;user&quot; и пароль=&quot;user&quot;).
             </span>
           </Alert>
         </Col>

@@ -23,15 +23,15 @@ export class ClientDetail extends React.Component<IClientDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Client [<b>{clientEntity.id}</b>]
+            Клиент <b>№{clientEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="firstName">First Name</span>
+              <span id="firstName">Имя</span>
             </dt>
             <dd>{clientEntity.firstName}</dd>
             <dt>
-              <span id="lastName">Last Name</span>
+              <span id="lastName">Фамилия</span>
             </dt>
             <dd>{clientEntity.lastName}</dd>
             <dt>
@@ -39,20 +39,20 @@ export class ClientDetail extends React.Component<IClientDetailProps> {
             </dt>
             <dd>{clientEntity.email}</dd>
             <dt>
-              <span id="phoneNumber">Phone Number</span>
+              <span id="phoneNumber">Телефон</span>
             </dt>
             <dd>{clientEntity.phoneNumber}</dd>
             <dt>
-              <span id="sex">Sex</span>
+              <span id="sex">Пол</span>
             </dt>
-            <dd>{clientEntity.sex}</dd>
+            <dd>{clientEntity.sex === "MAN" ? "муж" : clientEntity.sex === "WOMAN" ? "жен" : ""}</dd>
           </dl>
           <Button tag={Link} to="/client" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/client/${clientEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

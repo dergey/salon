@@ -51,10 +51,10 @@ export class Service extends React.Component<IServiceProps, IServiceState> {
     return (
       <div>
         <h2 id="service-heading">
-          Services
+          Услуги
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Service
+            &nbsp; Создать новую услугу
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,13 +63,16 @@ export class Service extends React.Component<IServiceProps, IServiceState> {
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('title')}>
-                    Title <FontAwesomeIcon icon="sort" />
+                    Название <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={this.sort('title')}>
+                    Пол <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('price')}>
-                    Price <FontAwesomeIcon icon="sort" />
+                    Цена <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -83,17 +86,18 @@ export class Service extends React.Component<IServiceProps, IServiceState> {
                       </Button>
                     </td>
                     <td>{service.title}</td>
+                    <td>{service.sex === "MAN" ? "муж" : service.sex === "WOMAN" ? "жен" : ""}</td>
                     <td>{service.price}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${service.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${service.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${service.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -102,7 +106,7 @@ export class Service extends React.Component<IServiceProps, IServiceState> {
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Services found</div>
+            <div className="alert alert-warning">Не найдено ни одной услуги</div>
           )}
         </div>
         <div className={serviceList && serviceList.length > 0 ? '' : 'd-none'}>

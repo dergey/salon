@@ -2,8 +2,11 @@ package com.sergey.zhuravlev.salon.web.rest;
 
 import com.sergey.zhuravlev.salon.domain.Employee;
 import com.sergey.zhuravlev.salon.service.EmployeeService;
+import com.sergey.zhuravlev.salon.service.dto.PasswordChangeDTO;
+import com.sergey.zhuravlev.salon.service.dto.ScheduleDTO;
 import com.sergey.zhuravlev.salon.web.rest.errors.BadRequestAlertException;
 
+import com.sergey.zhuravlev.salon.web.rest.errors.InvalidPasswordException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -126,4 +129,10 @@ public class EmployeeResource {
         employeeService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping(path = "/employees/{id}/schedule")
+    public ScheduleDTO getEmployeeSchedule(@PathVariable Long id) {
+        return employeeService.getEmployeeSchedule(id);
+    }
+
 }

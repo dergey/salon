@@ -74,7 +74,7 @@ spring:
     properties:
       hibernate.jdbc.time_zone: UTC
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
@@ -134,8 +134,8 @@ jhipster:
     from: salon@localhost
   swagger:
     default-include-pattern: /api/.*
-    title: salon API
-    description: salon API documentation
+    title: Salon API
+    description: Salon API Documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:

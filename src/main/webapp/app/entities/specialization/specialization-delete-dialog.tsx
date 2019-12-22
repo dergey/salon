@@ -30,16 +30,16 @@ export class SpecializationDeleteDialog extends React.Component<ISpecializationD
     const { specializationEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="salonApp.specialization.delete.question">Are you sure you want to delete this Specialization?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
+        <ModalBody id="salonApp.specialization.delete.question">Вы уверены, что хотите удалить эту специализацию?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp; Отмена
           </Button>
           <Button id="jhi-confirm-delete-specialization" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp; Удалить
           </Button>
         </ModalFooter>
       </Modal>

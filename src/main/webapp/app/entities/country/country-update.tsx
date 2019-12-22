@@ -74,7 +74,7 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.country.home.createOrEditLabel">Create or edit a Country</h2>
+            <h2 id="salonApp.country.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} страну</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -85,25 +85,25 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
               <AvForm model={isNew ? {} : countryEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="country-id">ID</Label>
+                    <Label for="country-id">Номер</Label>
                     <AvInput id="country-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="countryNameLabel" for="country-countryName">
-                    Country Name
+                    Название страны
                   </Label>
                   <AvField
                     id="country-countryName"
                     type="text"
                     name="countryName"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="country-region">Region</Label>
+                  <Label for="country-region">Регион</Label>
                   <AvInput id="country-region" type="select" className="form-control" name="region.id">
                     <option value="" key="0" />
                     {regions
@@ -118,12 +118,12 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
                 <Button tag={Link} id="cancel-save" to="/country" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

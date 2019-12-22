@@ -23,24 +23,24 @@ export class SpecializationDetail extends React.Component<ISpecializationDetailP
       <Row>
         <Col md="8">
           <h2>
-            Specialization [<b>{specializationEntity.id}</b>]
+            Специализация <b>№{specializationEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
+            <dt>Сотрудник</dt>
+            <dd>{specializationEntity.employee ? specializationEntity.employee.lastName + ' ' + specializationEntity.employee.firstName : ''}</dd>
+            <dt>Услуга</dt>
+            <dd>{specializationEntity.service ? specializationEntity.service.title : ''}</dd>
             <dt>
-              <span id="note">Note</span>
+              <span id="note">Заметка</span>
             </dt>
             <dd>{specializationEntity.note}</dd>
-            <dt>Employee</dt>
-            <dd>{specializationEntity.employee ? specializationEntity.employee.lastName : ''}</dd>
-            <dt>Service</dt>
-            <dd>{specializationEntity.service ? specializationEntity.service.title : ''}</dd>
           </dl>
           <Button tag={Link} to="/specialization" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/specialization/${specializationEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

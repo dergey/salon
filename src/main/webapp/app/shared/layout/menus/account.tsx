@@ -9,13 +9,13 @@ import { NavDropdown } from './menu-components';
 const accountMenuItemsAuthenticated = (
   <>
     <MenuItem icon="wrench" to="/account/settings">
-      Settings
+      Настройки
     </MenuItem>
     <MenuItem icon="lock" to="/account/password">
-      Password
+      Пароль
     </MenuItem>
     <MenuItem icon="sign-out-alt" to="/logout">
-      Sign out
+      Выход
     </MenuItem>
   </>
 );
@@ -23,16 +23,16 @@ const accountMenuItemsAuthenticated = (
 const accountMenuItems = (
   <>
     <MenuItem id="login-item" icon="sign-in-alt" to="/login">
-      Sign in
+      Войти
     </MenuItem>
     <MenuItem icon="sign-in-alt" to="/account/register">
-      Register
+      Зарегистрироваться
     </MenuItem>
   </>
 );
 
 export const AccountMenu = ({ isAuthenticated = false }) => (
-  <NavDropdown icon="user" name="Account" id="account-menu">
+  <NavDropdown icon="user" name="Аккаунт" id="account-menu">
     {isAuthenticated ? accountMenuItemsAuthenticated : accountMenuItems}
   </NavDropdown>
 );

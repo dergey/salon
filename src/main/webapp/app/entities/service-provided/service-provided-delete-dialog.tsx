@@ -30,16 +30,16 @@ export class ServiceProvidedDeleteDialog extends React.Component<IServiceProvide
     const { serviceProvidedEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="salonApp.serviceProvided.delete.question">Are you sure you want to delete this ServiceProvided?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
+        <ModalBody id="salonApp.serviceProvided.delete.question">Вы уверены, что хотите удалить предоставленную услугу?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp; Отмена
           </Button>
           <Button id="jhi-confirm-delete-serviceProvided" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp; Удалить
           </Button>
         </ModalFooter>
       </Modal>

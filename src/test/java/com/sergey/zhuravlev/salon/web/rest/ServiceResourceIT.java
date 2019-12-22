@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.sergey.zhuravlev.salon.web.rest.TestUtil.createFormattingConversionService;
@@ -37,8 +38,8 @@ public class ServiceResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_PRICE = 1L;
-    private static final Long UPDATED_PRICE = 2L;
+    private static final BigDecimal DEFAULT_PRICE = BigDecimal.valueOf(1L);
+    private static final BigDecimal UPDATED_PRICE = BigDecimal.valueOf(2L);
 
     @Autowired
     private ServiceRepository serviceRepository;
@@ -84,9 +85,10 @@ public class ServiceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Service createEntity(EntityManager em) {
-        Service service = new Service()
+        Service service = Service.builder()
             .title(DEFAULT_TITLE)
-            .price(DEFAULT_PRICE);
+            .price(DEFAULT_PRICE)
+            .build();
         return service;
     }
     /**
@@ -96,9 +98,10 @@ public class ServiceResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Service createUpdatedEntity(EntityManager em) {
-        Service service = new Service()
+        Service service = Service.builder()
             .title(UPDATED_TITLE)
-            .price(UPDATED_PRICE);
+            .price(UPDATED_PRICE)
+            .build();
         return service;
     }
 
@@ -232,9 +235,8 @@ public class ServiceResourceIT {
         Service updatedService = serviceRepository.findById(service.getId()).get();
         // Disconnect from session so that the updates on updatedService are not directly saved in db
         em.detach(updatedService);
-        updatedService
-            .title(UPDATED_TITLE)
-            .price(UPDATED_PRICE);
+        updatedService.setTitle(UPDATED_TITLE);
+        updatedService.setPrice(UPDATED_PRICE);
 
         restServiceMockMvc.perform(put("/api/services")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

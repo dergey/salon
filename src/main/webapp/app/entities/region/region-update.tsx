@@ -68,43 +68,43 @@ export class RegionUpdate extends React.Component<IRegionUpdateProps, IRegionUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.region.home.createOrEditLabel">Create or edit a Region</h2>
+            <h2 id="salonApp.region.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} регион</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : regionEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="region-id">ID</Label>
+                    <Label for="region-id">Номер</Label>
                     <AvInput id="region-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="regionNameLabel" for="region-regionName">
-                    Region Name
+                    Название региона
                   </Label>
                   <AvField
                     id="region-regionName"
                     type="text"
                     name="regionName"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/region" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

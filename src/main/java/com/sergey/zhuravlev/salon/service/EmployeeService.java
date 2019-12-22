@@ -2,6 +2,7 @@ package com.sergey.zhuravlev.salon.service;
 
 import com.sergey.zhuravlev.salon.domain.Employee;
 
+import com.sergey.zhuravlev.salon.service.dto.ScheduleDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -43,4 +44,6 @@ public interface EmployeeService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    ScheduleDTO getEmployeeSchedule(Long id);
 }

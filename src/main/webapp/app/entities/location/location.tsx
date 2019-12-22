@@ -51,10 +51,10 @@ export class Location extends React.Component<ILocationProps, ILocationState> {
     return (
       <div>
         <h2 id="location-heading">
-          Locations
+          Адреса
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Location
+            &nbsp; Создать новый адрес
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,22 +63,22 @@ export class Location extends React.Component<ILocationProps, ILocationState> {
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('address')}>
-                    Address <FontAwesomeIcon icon="sort" />
+                    Адрес <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('postalCode')}>
-                    Postal Code <FontAwesomeIcon icon="sort" />
+                    Индекс <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('city')}>
-                    City <FontAwesomeIcon icon="sort" />
+                    Город <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('stateProvince')}>
-                    State Province <FontAwesomeIcon icon="sort" />
+                    Область Штат <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Country <FontAwesomeIcon icon="sort" />
+                    Страна <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -99,13 +99,13 @@ export class Location extends React.Component<ILocationProps, ILocationState> {
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${location.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${location.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${location.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>

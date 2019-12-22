@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -51,11 +52,11 @@ public class EmployeeResourceIT {
     private static final Instant DEFAULT_HIRE_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_HIRE_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Long DEFAULT_SALARY = 1L;
-    private static final Long UPDATED_SALARY = 2L;
+    private static final BigDecimal DEFAULT_SALARY = BigDecimal.valueOf(1L);
+    private static final BigDecimal UPDATED_SALARY = BigDecimal.valueOf(2L);
 
-    private static final Long DEFAULT_COMMISSION_PCT = 1L;
-    private static final Long UPDATED_COMMISSION_PCT = 2L;
+    private static final BigDecimal DEFAULT_COMMISSION_PCT = BigDecimal.valueOf(1L);
+    private static final BigDecimal UPDATED_COMMISSION_PCT = BigDecimal.valueOf(2L);
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -101,14 +102,15 @@ public class EmployeeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Employee createEntity(EntityManager em) {
-        Employee employee = new Employee()
+        Employee employee = Employee.builder()
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
             .email(DEFAULT_EMAIL)
             .phoneNumber(DEFAULT_PHONE_NUMBER)
             .hireDate(DEFAULT_HIRE_DATE)
             .salary(DEFAULT_SALARY)
-            .commissionPct(DEFAULT_COMMISSION_PCT);
+            .commissionPct(DEFAULT_COMMISSION_PCT)
+            .build();
         return employee;
     }
     /**
@@ -118,14 +120,14 @@ public class EmployeeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Employee createUpdatedEntity(EntityManager em) {
-        Employee employee = new Employee()
-            .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .email(UPDATED_EMAIL)
-            .phoneNumber(UPDATED_PHONE_NUMBER)
-            .hireDate(UPDATED_HIRE_DATE)
-            .salary(UPDATED_SALARY)
-            .commissionPct(UPDATED_COMMISSION_PCT);
+        Employee employee = new Employee();
+        employee.setFirstName(UPDATED_FIRST_NAME);
+        employee.setLastName(UPDATED_LAST_NAME);
+        employee.setEmail(UPDATED_EMAIL);
+        employee.setPhoneNumber(UPDATED_PHONE_NUMBER);
+        employee.setHireDate(UPDATED_HIRE_DATE);
+        employee.setSalary(UPDATED_SALARY);
+        employee.setCommissionPct(UPDATED_COMMISSION_PCT);
         return employee;
     }
 
@@ -364,14 +366,13 @@ public class EmployeeResourceIT {
         Employee updatedEmployee = employeeRepository.findById(employee.getId()).get();
         // Disconnect from session so that the updates on updatedEmployee are not directly saved in db
         em.detach(updatedEmployee);
-        updatedEmployee
-            .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .email(UPDATED_EMAIL)
-            .phoneNumber(UPDATED_PHONE_NUMBER)
-            .hireDate(UPDATED_HIRE_DATE)
-            .salary(UPDATED_SALARY)
-            .commissionPct(UPDATED_COMMISSION_PCT);
+        updatedEmployee.setFirstName(UPDATED_FIRST_NAME);
+        updatedEmployee.setLastName(UPDATED_LAST_NAME);
+        updatedEmployee.setEmail(UPDATED_EMAIL);
+        updatedEmployee.setPhoneNumber(UPDATED_PHONE_NUMBER);
+        updatedEmployee.setHireDate(UPDATED_HIRE_DATE);
+        updatedEmployee.setSalary(UPDATED_SALARY);
+        updatedEmployee.setCommissionPct(UPDATED_COMMISSION_PCT);
 
         restEmployeeMockMvc.perform(put("/api/employees")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

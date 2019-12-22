@@ -22,10 +22,10 @@ export class Region extends React.Component<IRegionProps> {
     return (
       <div>
         <h2 id="region-heading">
-          Regions
+          Регионы
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Region
+            &nbsp; Создать новый регион
           </Link>
         </h2>
         <div className="table-responsive">
@@ -33,8 +33,8 @@ export class Region extends React.Component<IRegionProps> {
             <Table responsive aria-describedby="region-heading">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Region Name</th>
+                  <th>Номер</th>
+                  <th>Название</th>
                   <th />
                 </tr>
               </thead>
@@ -50,13 +50,13 @@ export class Region extends React.Component<IRegionProps> {
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${region.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${region.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${region.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -65,7 +65,7 @@ export class Region extends React.Component<IRegionProps> {
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Regions found</div>
+            <div className="alert alert-warning">Не найдено ни одного региона</div>
           )}
         </div>
       </div>

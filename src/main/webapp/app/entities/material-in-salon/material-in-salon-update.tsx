@@ -79,24 +79,24 @@ export class MaterialInSalonUpdate extends React.Component<IMaterialInSalonUpdat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.materialInSalon.home.createOrEditLabel">Create or edit a MaterialInSalon</h2>
+            <h2 id="salonApp.materialInSalon.home.createOrEditLabel">{isNew ? 'Добавить материал в салон' : 'Редактировать материал в салоне'}</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : materialInSalonEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="material-in-salon-id">ID</Label>
+                    <Label for="material-in-salon-id">Номер</Label>
                     <AvInput id="material-in-salon-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="countLabel" for="material-in-salon-count">
-                    Count
+                    Количество
                   </Label>
                   <AvField
                     id="material-in-salon-count"
@@ -104,13 +104,13 @@ export class MaterialInSalonUpdate extends React.Component<IMaterialInSalonUpdat
                     className="form-control"
                     name="count"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' },
+                      number: { value: true, errorMessage: 'Это поле должно быть числом.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="material-in-salon-material">Material</Label>
+                  <Label for="material-in-salon-material">Материал</Label>
                   <AvInput id="material-in-salon-material" type="select" className="form-control" name="material.id">
                     <option value="" key="0" />
                     {materials
@@ -123,7 +123,7 @@ export class MaterialInSalonUpdate extends React.Component<IMaterialInSalonUpdat
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="material-in-salon-salon">Salon</Label>
+                  <Label for="material-in-salon-salon">Салон</Label>
                   <AvInput id="material-in-salon-salon" type="select" className="form-control" name="salon.id">
                     <option value="" key="0" />
                     {salons
@@ -138,12 +138,12 @@ export class MaterialInSalonUpdate extends React.Component<IMaterialInSalonUpdat
                 <Button tag={Link} id="cancel-save" to="/material-in-salon" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

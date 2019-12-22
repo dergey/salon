@@ -51,10 +51,10 @@ export class ServiceProvided extends React.Component<IServiceProvidedProps, ISer
     return (
       <div>
         <h2 id="service-provided-heading">
-          Service Provideds
+          Предоставленные услуги
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Service Provided
+            &nbsp; Создать предоставленную услугу
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,25 +63,25 @@ export class ServiceProvided extends React.Component<IServiceProvidedProps, ISer
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('startDate')}>
-                    Start Date <FontAwesomeIcon icon="sort" />
+                    Дата начала <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('endDate')}>
-                    End Date <FontAwesomeIcon icon="sort" />
+                    Дата окончания <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    Заказ <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    Услуга <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    Сотрудник <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('note')}>
-                    Note <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    Order <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    Employee <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th>
-                    Service <FontAwesomeIcon icon="sort" />
+                    Примечание <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -100,15 +100,7 @@ export class ServiceProvided extends React.Component<IServiceProvidedProps, ISer
                     <td>
                       <TextFormat type="date" value={serviceProvided.endDate} format={APP_DATE_FORMAT} />
                     </td>
-                    <td>{serviceProvided.note}</td>
                     <td>{serviceProvided.order ? <Link to={`order/${serviceProvided.order.id}`}>{serviceProvided.order.id}</Link> : ''}</td>
-                    <td>
-                      {serviceProvided.employee ? (
-                        <Link to={`employee/${serviceProvided.employee.id}`}>{serviceProvided.employee.lastName}</Link>
-                      ) : (
-                        ''
-                      )}
-                    </td>
                     <td>
                       {serviceProvided.service ? (
                         <Link to={`service/${serviceProvided.service.id}`}>{serviceProvided.service.title}</Link>
@@ -116,16 +108,26 @@ export class ServiceProvided extends React.Component<IServiceProvidedProps, ISer
                         ''
                       )}
                     </td>
+                    <td>
+                      {serviceProvided.employee ? (
+                        <Link to={`employee/${serviceProvided.employee.id}`}>
+                          {serviceProvided.employee.lastName + ' ' + serviceProvided.employee.firstName}
+                        </Link>
+                      ) : (
+                        ''
+                      )}
+                    </td>
+                    <td>{serviceProvided.note}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${serviceProvided.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${serviceProvided.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${serviceProvided.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>

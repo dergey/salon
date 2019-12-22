@@ -28,6 +28,11 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faRoad } from '@fortawesome/free-solid-svg-icons/faRoad';
 import { faCloud } from '@fortawesome/free-solid-svg-icons/faCloud';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt';
+import { faConciergeBell } from '@fortawesome/free-solid-svg-icons/faConciergeBell';
+import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes';
+import { faUserTie } from '@fortawesome/free-solid-svg-icons/faUserTie';
+import { faStoreAlt } from '@fortawesome/free-solid-svg-icons/faStoreAlt';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 
@@ -62,6 +67,11 @@ export const loadIcons = () => {
     faRoad,
     faCloud,
     faTimesCircle,
-    faSearch
+    faSearch,
+    faCalendarAlt,
+    faConciergeBell,
+    faCubes,
+    faUserTie,
+    faStoreAlt
   );
 };

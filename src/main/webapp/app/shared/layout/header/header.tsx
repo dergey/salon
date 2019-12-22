@@ -10,6 +10,9 @@ import LoadingBar from 'react-redux-loading-bar';
 
 import { Home, Brand } from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu } from '../menus';
+import {EmployeesMenu} from "app/shared/layout/menus/employees";
+import {ServicesMenu} from "app/shared/layout/menus/services";
+import {MaterialsMenu} from "app/shared/layout/menus/materials";
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -22,20 +25,12 @@ export interface IHeaderProps {
 const Header = (props: IHeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const renderDevRibbon = () =>
-    props.isInProduction === false ? (
-      <div className="ribbon dev">
-        <a href="">Development</a>
-      </div>
-    ) : null;
-
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   /* jhipster-needle-add-element-to-menu - JHipster will add new menu items here */
 
   return (
     <div id="app-header">
-      {renderDevRibbon()}
       <LoadingBar className="loading-bar" />
       <Navbar dark expand="sm" fixed="top" className="jh-navbar">
         <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
@@ -44,6 +39,9 @@ const Header = (props: IHeaderProps) => {
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
             {props.isAuthenticated && <EntitiesMenu />}
+            {props.isAuthenticated && <EmployeesMenu />}
+            {props.isAuthenticated && <MaterialsMenu />}
+            {props.isAuthenticated && <ServicesMenu />}
             {props.isAuthenticated && props.isAdmin && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
             <AccountMenu isAuthenticated={props.isAuthenticated} />
           </Nav>

@@ -30,16 +30,16 @@ export class CountryDeleteDialog extends React.Component<ICountryDeleteDialogPro
     const { countryEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="salonApp.country.delete.question">Are you sure you want to delete this Country?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
+        <ModalBody id="salonApp.country.delete.question">Вы уверены, что хотите удалить {countryEntity.countryName}?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp; Отменить
           </Button>
           <Button id="jhi-confirm-delete-country" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp; Удалить
           </Button>
         </ModalFooter>
       </Modal>

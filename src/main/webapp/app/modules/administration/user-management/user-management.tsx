@@ -52,20 +52,20 @@ export const UserManagement = (props: IUserManagementProps) => {
   return (
     <div>
       <h2 id="user-management-page-heading">
-        Users
+        Пользователи
         <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity">
-          <FontAwesomeIcon icon="plus" /> Create a new user
+          <FontAwesomeIcon icon="plus" /> Создать нового пользователя
         </Link>
       </h2>
       <Table responsive striped>
         <thead>
           <tr>
             <th className="hand" onClick={sort('id')}>
-              ID
+              Номер
               <FontAwesomeIcon icon="sort" />
             </th>
             <th className="hand" onClick={sort('login')}>
-              Login
+              Имя пользователя
               <FontAwesomeIcon icon="sort" />
             </th>
             <th className="hand" onClick={sort('email')}>
@@ -73,17 +73,17 @@ export const UserManagement = (props: IUserManagementProps) => {
               <FontAwesomeIcon icon="sort" />
             </th>
             <th />
-            <th>Profiles</th>
+            <th>Профили</th>
             <th className="hand" onClick={sort('createdDate')}>
-              Created Date
+              Дата создания
               <FontAwesomeIcon icon="sort" />
             </th>
             <th className="hand" onClick={sort('lastModifiedBy')}>
-              Last Modified By
+              Изменен
               <FontAwesomeIcon icon="sort" />
             </th>
             <th id="modified-date-sort" className="hand" onClick={sort('lastModifiedDate')}>
-              Last Modified Date
+              Дата последнего изменения
               <FontAwesomeIcon icon="sort" />
             </th>
             <th />
@@ -102,11 +102,11 @@ export const UserManagement = (props: IUserManagementProps) => {
               <td>
                 {user.activated ? (
                   <Button color="success" onClick={toggleActive(user)}>
-                    Activated
+                    Активен
                   </Button>
                 ) : (
                   <Button color="danger" onClick={toggleActive(user)}>
-                    Deactivated
+                    Остановлен
                   </Button>
                 )}
               </td>
@@ -129,10 +129,10 @@ export const UserManagement = (props: IUserManagementProps) => {
               <td className="text-right">
                 <div className="btn-group flex-btn-group-container">
                   <Button tag={Link} to={`${match.url}/${user.login}`} color="info" size="sm">
-                    <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                    <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                   </Button>
                   <Button tag={Link} to={`${match.url}/${user.login}/edit`} color="primary" size="sm">
-                    <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                    <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                   </Button>
                   <Button
                     tag={Link}
@@ -141,7 +141,7 @@ export const UserManagement = (props: IUserManagementProps) => {
                     size="sm"
                     disabled={account.login === user.login}
                   >
-                    <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                    <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                   </Button>
                 </div>
               </td>

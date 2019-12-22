@@ -22,34 +22,30 @@ export const UserManagementDetail = (props: IUserManagementDetailProps) => {
   return (
     <div>
       <h2>
-        User [<b>{user.login}</b>]
+        Пользователь <b>{user.login}</b>
       </h2>
       <Row size="md">
         <dl className="jh-entity-details">
-          <dt>Login</dt>
+          <dt>Имя пользователя</dt>
           <dd>
             <span>{user.login}</span>&nbsp;
             {user.activated ? <Badge color="success">Activated</Badge> : <Badge color="danger">Deactivated</Badge>}
           </dd>
-          <dt>First Name</dt>
-          <dd>{user.firstName}</dd>
-          <dt>Last Name</dt>
-          <dd>{user.lastName}</dd>
           <dt>Email</dt>
           <dd>{user.email}</dd>
-          <dt>Created By</dt>
+          <dt>Создан</dt>
           <dd>{user.createdBy}</dd>
-          <dt>Created Date</dt>
+          <dt>Дата создания</dt>
           <dd>
             <TextFormat value={user.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
           </dd>
-          <dt>Last Modified By</dt>
+          <dt>Изменен</dt>
           <dd>{user.lastModifiedBy}</dd>
-          <dt>Last Modified Date</dt>
+          <dt>Последняя измененная дата</dt>
           <dd>
             <TextFormat value={user.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
           </dd>
-          <dt>Profiles</dt>
+          <dt>Профили</dt>
           <dd>
             <ul className="list-unstyled">
               {user.authorities
@@ -64,7 +60,7 @@ export const UserManagementDetail = (props: IUserManagementDetailProps) => {
         </dl>
       </Row>
       <Button tag={Link} to="/admin/user-management" replace color="info">
-        <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+        <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
       </Button>
     </div>
   );

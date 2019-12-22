@@ -84,24 +84,24 @@ export class UsedMaterialUpdate extends React.Component<IUsedMaterialUpdateProps
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.usedMaterial.home.createOrEditLabel">Create or edit a UsedMaterial</h2>
+            <h2 id="salonApp.usedMaterial.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} использованный материал</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : usedMaterialEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="used-material-id">ID</Label>
+                    <Label for="used-material-id">Номер</Label>
                     <AvInput id="used-material-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="countLabel" for="used-material-count">
-                    Count
+                    Количество
                   </Label>
                   <AvField
                     id="used-material-count"
@@ -109,19 +109,19 @@ export class UsedMaterialUpdate extends React.Component<IUsedMaterialUpdateProps
                     className="form-control"
                     name="count"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' },
+                      number: { value: true, errorMessage: 'Это поле должно быть числом.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="decommissionLabel" check>
                     <AvInput id="used-material-decommission" type="checkbox" className="form-control" name="decommission" />
-                    Decommission
+                    Вывод из эксплуатации?
                   </Label>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="used-material-order">Order</Label>
+                  <Label for="used-material-order">Заказ</Label>
                   <AvInput id="used-material-order" type="select" className="form-control" name="order.id">
                     <option value="" key="0" />
                     {orders
@@ -134,7 +134,7 @@ export class UsedMaterialUpdate extends React.Component<IUsedMaterialUpdateProps
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="used-material-material">Material</Label>
+                  <Label for="used-material-material">Материал</Label>
                   <AvInput id="used-material-material" type="select" className="form-control" name="material.id">
                     <option value="" key="0" />
                     {materials
@@ -147,13 +147,13 @@ export class UsedMaterialUpdate extends React.Component<IUsedMaterialUpdateProps
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="used-material-employee">Employee</Label>
+                  <Label for="used-material-employee">Сотрудник</Label>
                   <AvInput id="used-material-employee" type="select" className="form-control" name="employee.id">
                     <option value="" key="0" />
                     {employees
                       ? employees.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.lastName}
+                            {otherEntity.lastName + ' ' + otherEntity.firstName}
                           </option>
                         ))
                       : null}
@@ -162,12 +162,12 @@ export class UsedMaterialUpdate extends React.Component<IUsedMaterialUpdateProps
                 <Button tag={Link} id="cancel-save" to="/used-material" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

@@ -30,16 +30,16 @@ export class UsedMaterialDeleteDialog extends React.Component<IUsedMaterialDelet
     const { usedMaterialEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="salonApp.usedMaterial.delete.question">Are you sure you want to delete this UsedMaterial?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
+        <ModalBody id="salonApp.usedMaterial.delete.question">Вы уверены, что хотите удалить использованный материал?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp; Отмена
           </Button>
           <Button id="jhi-confirm-delete-usedMaterial" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp; Удалить
           </Button>
         </ModalFooter>
       </Modal>

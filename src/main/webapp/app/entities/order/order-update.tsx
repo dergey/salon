@@ -76,24 +76,24 @@ export class OrderUpdate extends React.Component<IOrderUpdateProps, IOrderUpdate
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.order.home.createOrEditLabel">Create or edit a Order</h2>
+            <h2 id="salonApp.order.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} заказ</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : orderEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="order-id">ID</Label>
+                    <Label for="order-id">Номер</Label>
                     <AvInput id="order-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="dateLabel" for="order-date">
-                    Date
+                    Дата
                   </Label>
                   <AvInput
                     id="order-date"
@@ -105,13 +105,13 @@ export class OrderUpdate extends React.Component<IOrderUpdateProps, IOrderUpdate
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="order-client">Client</Label>
+                  <Label for="order-client">Клиент</Label>
                   <AvInput id="order-client" type="select" className="form-control" name="client.id">
                     <option value="" key="0" />
                     {clients
                       ? clients.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.lastName}
+                            {otherEntity.lastName + ' ' + otherEntity.firstName}
                           </option>
                         ))
                       : null}
@@ -120,12 +120,12 @@ export class OrderUpdate extends React.Component<IOrderUpdateProps, IOrderUpdate
                 <Button tag={Link} id="cancel-save" to="/order" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

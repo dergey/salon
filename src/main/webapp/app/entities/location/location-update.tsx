@@ -74,7 +74,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.location.home.createOrEditLabel">Create or edit a Location</h2>
+            <h2 id="salonApp.location.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} адрес</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -91,44 +91,44 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                 ) : null}
                 <AvGroup>
                   <Label id="addressLabel" for="location-address">
-                    Address
+                    Адрес
                   </Label>
                   <AvField
                     id="location-address"
                     type="text"
                     name="address"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="postalCodeLabel" for="location-postalCode">
-                    Postal Code
+                    Индекс
                   </Label>
                   <AvField id="location-postalCode" type="text" name="postalCode" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="cityLabel" for="location-city">
-                    City
+                    Город
                   </Label>
                   <AvField
                     id="location-city"
                     type="text"
                     name="city"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="stateProvinceLabel" for="location-stateProvince">
-                    State Province
+                    Область Штат
                   </Label>
                   <AvField id="location-stateProvince" type="text" name="stateProvince" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="location-country">Country</Label>
+                  <Label for="location-country">Страна</Label>
                   <AvInput id="location-country" type="select" className="form-control" name="country.id">
                     <option value="" key="0" />
                     {countries
@@ -143,12 +143,12 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                 <Button tag={Link} id="cancel-save" to="/location" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

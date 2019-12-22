@@ -51,10 +51,10 @@ export class Client extends React.Component<IClientProps, IClientState> {
     return (
       <div>
         <h2 id="client-heading">
-          Clients
+          Клиенты
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Client
+            &nbsp; Создать нового клиента
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,22 +63,22 @@ export class Client extends React.Component<IClientProps, IClientState> {
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('firstName')}>
-                    First Name <FontAwesomeIcon icon="sort" />
+                    Имя <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('lastName')}>
-                    Last Name <FontAwesomeIcon icon="sort" />
+                    Фамилия <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('email')}>
                     Email <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('phoneNumber')}>
-                    Phone Number <FontAwesomeIcon icon="sort" />
+                    Телефон <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('sex')}>
-                    Sex <FontAwesomeIcon icon="sort" />
+                    Пол <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -95,17 +95,17 @@ export class Client extends React.Component<IClientProps, IClientState> {
                     <td>{client.lastName}</td>
                     <td>{client.email}</td>
                     <td>{client.phoneNumber}</td>
-                    <td>{client.sex}</td>
+                    <td>{client.sex === "MAN" ? "муж" : client.sex === "WOMAN" ? "жен" : ""}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${client.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${client.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${client.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -114,7 +114,7 @@ export class Client extends React.Component<IClientProps, IClientState> {
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Clients found</div>
+            <div className="alert alert-warning">Не найдено ни одного клиента</div>
           )}
         </div>
         <div className={clientList && clientList.length > 0 ? '' : 'd-none'}>

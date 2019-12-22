@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './employee.reducer';
-import { IEmployee } from 'app/shared/model/employee.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
@@ -51,10 +50,10 @@ export class Employee extends React.Component<IEmployeeProps, IEmployeeState> {
     return (
       <div>
         <h2 id="employee-heading">
-          Employees
+          Сотрудники
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Employee
+            &nbsp; Создать нового сотрудника
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,34 +62,34 @@ export class Employee extends React.Component<IEmployeeProps, IEmployeeState> {
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('firstName')}>
-                    First Name <FontAwesomeIcon icon="sort" />
+                    Имя <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('lastName')}>
-                    Last Name <FontAwesomeIcon icon="sort" />
+                    Фамилия <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('email')}>
                     Email <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('phoneNumber')}>
-                    Phone Number <FontAwesomeIcon icon="sort" />
+                    Телефон <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('hireDate')}>
-                    Hire Date <FontAwesomeIcon icon="sort" />
+                    Дата найма <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('salary')}>
-                    Salary <FontAwesomeIcon icon="sort" />
+                    Зарплата <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('commissionPct')}>
-                    Commission Pct <FontAwesomeIcon icon="sort" />
+                    Коммисионные <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Manager <FontAwesomeIcon icon="sort" />
+                    Менеджер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Salon <FontAwesomeIcon icon="sort" />
+                    Парикмахерская <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -112,18 +111,18 @@ export class Employee extends React.Component<IEmployeeProps, IEmployeeState> {
                     </td>
                     <td>{employee.salary}</td>
                     <td>{employee.commissionPct}</td>
-                    <td>{employee.manager ? <Link to={`employee/${employee.manager.id}`}>{employee.manager.lastName}</Link> : ''}</td>
+                    <td>{employee.manager ? <Link to={`employee/${employee.manager.id}`}>{employee.manager.lastName} {employee.manager.firstName}</Link> : ''}</td>
                     <td>{employee.salon ? <Link to={`salon/${employee.salon.id}`}>{employee.salon.title}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${employee.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${employee.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${employee.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -132,7 +131,7 @@ export class Employee extends React.Component<IEmployeeProps, IEmployeeState> {
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Employees found</div>
+            <div className="alert alert-warning">Не найдено ни одного сотрудника</div>
           )}
         </div>
         <div className={employeeList && employeeList.length > 0 ? '' : 'd-none'}>

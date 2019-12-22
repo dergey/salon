@@ -23,22 +23,24 @@ export class SalonDetail extends React.Component<ISalonDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Salon [<b>{salonEntity.id}</b>]
+            Салон <b>№{salonEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="title">Title</span>
+              <span id="title">Название</span>
             </dt>
             <dd>{salonEntity.title}</dd>
-            <dt>Location</dt>
-            <dd>{salonEntity.location ? salonEntity.location.id : ''}</dd>
+            <dt>Адрес</dt>
+            <dd>
+              {salonEntity.location ? salonEntity.location.country.countryName + ', ' + salonEntity.location.city + ', ' + salonEntity.location.address : ''}
+            </dd>
           </dl>
           <Button tag={Link} to="/salon" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/salon/${salonEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

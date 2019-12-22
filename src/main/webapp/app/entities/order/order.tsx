@@ -51,10 +51,10 @@ export class Order extends React.Component<IOrderProps, IOrderState> {
     return (
       <div>
         <h2 id="order-heading">
-          Orders
+          Заказы
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Order
+            &nbsp; Создать новый заказ
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,13 +63,13 @@ export class Order extends React.Component<IOrderProps, IOrderState> {
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('date')}>
-                    Date <FontAwesomeIcon icon="sort" />
+                    Дата <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Client <FontAwesomeIcon icon="sort" />
+                    Клиент <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -85,17 +85,17 @@ export class Order extends React.Component<IOrderProps, IOrderState> {
                     <td>
                       <TextFormat type="date" value={order.date} format={APP_DATE_FORMAT} />
                     </td>
-                    <td>{order.client ? <Link to={`client/${order.client.id}`}>{order.client.lastName}</Link> : ''}</td>
+                    <td>{order.client ? <Link to={`client/${order.client.id}`}>{order.client.lastName + ' ' + order.client.firstName}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${order.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${order.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${order.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -104,7 +104,7 @@ export class Order extends React.Component<IOrderProps, IOrderState> {
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Orders found</div>
+            <div className="alert alert-warning">Не найдено ни одного заказа</div>
           )}
         </div>
         <div className={orderList && orderList.length > 0 ? '' : 'd-none'}>

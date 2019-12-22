@@ -87,24 +87,24 @@ export class ServiceProvidedUpdate extends React.Component<IServiceProvidedUpdat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.serviceProvided.home.createOrEditLabel">Create or edit a ServiceProvided</h2>
+            <h2 id="salonApp.serviceProvided.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} оказанную услугу</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : serviceProvidedEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="service-provided-id">ID</Label>
+                    <Label for="service-provided-id">Номер</Label>
                     <AvInput id="service-provided-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="startDateLabel" for="service-provided-startDate">
-                    Start Date
+                    Дата начала
                   </Label>
                   <AvInput
                     id="service-provided-startDate"
@@ -117,7 +117,7 @@ export class ServiceProvidedUpdate extends React.Component<IServiceProvidedUpdat
                 </AvGroup>
                 <AvGroup>
                   <Label id="endDateLabel" for="service-provided-endDate">
-                    End Date
+                    Дата окончания
                   </Label>
                   <AvInput
                     id="service-provided-endDate"
@@ -129,13 +129,7 @@ export class ServiceProvidedUpdate extends React.Component<IServiceProvidedUpdat
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="noteLabel" for="service-provided-note">
-                    Note
-                  </Label>
-                  <AvField id="service-provided-note" type="text" name="note" />
-                </AvGroup>
-                <AvGroup>
-                  <Label for="service-provided-order">Order</Label>
+                  <Label for="service-provided-order">Заказ</Label>
                   <AvInput id="service-provided-order" type="select" className="form-control" name="order.id">
                     <option value="" key="0" />
                     {orders
@@ -148,40 +142,46 @@ export class ServiceProvidedUpdate extends React.Component<IServiceProvidedUpdat
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="service-provided-employee">Employee</Label>
+                  <Label for="service-provided-service">Услуга</Label>
+                  <AvInput id="service-provided-service" type="select" className="form-control" name="service.id">
+                    <option value="" key="0" />
+                    {services
+                      ? services.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.title}
+                        </option>
+                      ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="service-provided-employee">Сотрудник</Label>
                   <AvInput id="service-provided-employee" type="select" className="form-control" name="employee.id">
                     <option value="" key="0" />
                     {employees
                       ? employees.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.lastName}
+                            {otherEntity.lastName + ' ' + otherEntity.firstName}
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="service-provided-service">Service</Label>
-                  <AvInput id="service-provided-service" type="select" className="form-control" name="service.id">
-                    <option value="" key="0" />
-                    {services
-                      ? services.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.title}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Label id="noteLabel" for="service-provided-note">
+                    Примечание
+                  </Label>
+                  <AvField id="service-provided-note" type="text" name="note" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/service-provided" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

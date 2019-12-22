@@ -23,24 +23,24 @@ export class OrderDetail extends React.Component<IOrderDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Order [<b>{orderEntity.id}</b>]
+            Заказ <b>№{orderEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="date">Date</span>
+              <span id="date">Дата</span>
             </dt>
             <dd>
               <TextFormat value={orderEntity.date} type="date" format={APP_DATE_FORMAT} />
             </dd>
-            <dt>Client</dt>
-            <dd>{orderEntity.client ? orderEntity.client.lastName : ''}</dd>
+            <dt>Клиент</dt>
+            <dd>{orderEntity.client ? orderEntity.client.lastName + ' ' + orderEntity.client.firstName : ''}</dd>
           </dl>
           <Button tag={Link} to="/order" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/order/${orderEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

@@ -68,37 +68,37 @@ export class MaterialUpdate extends React.Component<IMaterialUpdateProps, IMater
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.material.home.createOrEditLabel">Create or edit a Material</h2>
+            <h2 id="salonApp.material.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} материал</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : materialEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="material-id">ID</Label>
+                    <Label for="material-id">Номер</Label>
                     <AvInput id="material-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="titleLabel" for="material-title">
-                    Title
+                    Название
                   </Label>
                   <AvField
                     id="material-title"
                     type="text"
                     name="title"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="unitLabel" for="material-unit">
-                    Unit
+                    Единица
                   </Label>
                   <AvInput
                     id="material-unit"
@@ -107,33 +107,33 @@ export class MaterialUpdate extends React.Component<IMaterialUpdateProps, IMater
                     name="unit"
                     value={(!isNew && materialEntity.unit) || 'METER'}
                   >
-                    <option value="METER">METER</option>
-                    <option value="KILOGRAM">KILOGRAM</option>
+                    <option value="METER">Метр</option>
+                    <option value="KILOGRAM">Килограмм</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="priceLabel" for="material-price">
-                    Price
+                    Цена
                   </Label>
                   <AvField
                     id="material-price"
                     type="text"
                     name="price"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' },
+                      number: { value: true, errorMessage: 'Это поле должно быть числом.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/material" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

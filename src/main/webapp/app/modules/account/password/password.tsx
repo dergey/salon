@@ -30,56 +30,56 @@ export const PasswordPage = (props: IUserPasswordProps) => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="password-title">Password for {props.account.login}</h2>
+          <h2 id="password-title">Пароль для {props.account.login}</h2>
           <AvForm id="password-form" onValidSubmit={handleValidSubmit}>
             <AvField
               name="currentPassword"
-              label="Current password"
-              placeholder={'Current password'}
+              label="Текущий пароль"
+              placeholder={'Текущий пароль'}
               type="password"
               validate={{
-                required: { value: true, errorMessage: 'Your password is required.' }
+                required: { value: true, errorMessage: 'Текущий пароль является обязательным.' }
               }}
             />
             <AvField
               name="newPassword"
-              label="New password"
-              placeholder={'New password'}
+              label="Новый пароль"
+              placeholder={'Новый пароль'}
               type="password"
               validate={{
-                required: { value: true, errorMessage: 'Your password is required.' },
-                minLength: { value: 4, errorMessage: 'Your password is required to be at least 4 characters.' },
-                maxLength: { value: 50, errorMessage: 'Your password cannot be longer than 50 characters.' }
+                required: { value: true, errorMessage: 'Новый пароль является обязательным.' },
+                minLength: { value: 4, errorMessage: 'Ваш пароль должен состоять не менее чем из 4-х символов.' },
+                maxLength: { value: 50, errorMessage: 'Ваш пароль не может быть длиннее 50 символов.' }
               }}
               onChange={updatePassword}
             />
             <PasswordStrengthBar password={password} />
             <AvField
               name="confirmPassword"
-              label="New password confirmation"
-              placeholder="Confirm the new password"
+              label="Подтверждение нового пароля"
+              placeholder="Подтвердите новый пароль"
               type="password"
               validate={{
                 required: {
                   value: true,
-                  errorMessage: 'Your confirmation password is required.'
+                  errorMessage: 'Подтверждение пароля обязательно.'
                 },
                 minLength: {
                   value: 4,
-                  errorMessage: 'Your confirmation password is required to be at least 4 characters.'
+                  errorMessage: 'Подтверждение пароля должено состоять не менее чем из 4-х символов.'
                 },
                 maxLength: {
                   value: 50,
-                  errorMessage: 'Your confirmation password cannot be longer than 50 characters.'
+                  errorMessage: 'Подтверждение пароля не может быть длиннее 50 символов.'
                 },
                 match: {
                   value: 'newPassword',
-                  errorMessage: 'The password and its confirmation do not match!'
+                  errorMessage: 'Пароль и его подтверждение не совпадают!'
                 }
               }}
             />
             <Button color="success" type="submit">
-              Save
+              Сохранить
             </Button>
           </AvForm>
         </Col>

@@ -23,34 +23,34 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Location [<b>{locationEntity.id}</b>]
+            Адрес <b>№{locationEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="address">Address</span>
+              <span id="address">Адрес</span>
             </dt>
             <dd>{locationEntity.address}</dd>
             <dt>
-              <span id="postalCode">Postal Code</span>
+              <span id="postalCode">Индекс</span>
             </dt>
             <dd>{locationEntity.postalCode}</dd>
             <dt>
-              <span id="city">City</span>
+              <span id="city">Город</span>
             </dt>
             <dd>{locationEntity.city}</dd>
             <dt>
-              <span id="stateProvince">State Province</span>
+              <span id="stateProvince">Область Штат</span>
             </dt>
             <dd>{locationEntity.stateProvince}</dd>
-            <dt>Country</dt>
+            <dt>Страна</dt>
             <dd>{locationEntity.country ? locationEntity.country.countryName : ''}</dd>
           </dl>
           <Button tag={Link} to="/location" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/location/${locationEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

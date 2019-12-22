@@ -23,24 +23,24 @@ export class MaterialInSalonDetail extends React.Component<IMaterialInSalonDetai
       <Row>
         <Col md="8">
           <h2>
-            MaterialInSalon [<b>{materialInSalonEntity.id}</b>]
+            Материал в салоне <b>№{materialInSalonEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="count">Count</span>
+              <span id="count">Количество</span>
             </dt>
             <dd>{materialInSalonEntity.count}</dd>
-            <dt>Material</dt>
+            <dt>Материал</dt>
             <dd>{materialInSalonEntity.material ? materialInSalonEntity.material.title : ''}</dd>
-            <dt>Salon</dt>
+            <dt>Салон</dt>
             <dd>{materialInSalonEntity.salon ? materialInSalonEntity.salon.title : ''}</dd>
           </dl>
           <Button tag={Link} to="/material-in-salon" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/material-in-salon/${materialInSalonEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

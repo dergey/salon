@@ -4,15 +4,18 @@ import { Switch } from 'react-router-dom';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
 import Employee from './employee';
+import EmployeeSchedule from "./employee-schedule";
 import EmployeeDetail from './employee-detail';
 import EmployeeUpdate from './employee-update';
 import EmployeeDeleteDialog from './employee-delete-dialog';
+
 
 const Routes = ({ match }) => (
   <>
     <Switch>
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={EmployeeUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={EmployeeUpdate} />
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/schedule`} component={EmployeeSchedule} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={EmployeeDetail} />
       <ErrorBoundaryRoute path={match.url} component={Employee} />
     </Switch>

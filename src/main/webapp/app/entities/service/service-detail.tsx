@@ -23,24 +23,28 @@ export class ServiceDetail extends React.Component<IServiceDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Service [<b>{serviceEntity.id}</b>]
+            Услуга <b>№{serviceEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="title">Title</span>
+              <span id="title">Название</span>
             </dt>
             <dd>{serviceEntity.title}</dd>
             <dt>
-              <span id="price">Price</span>
+              <span id="sex">Пол</span>
+            </dt>
+            <dd>{serviceEntity.sex === "MAN" ? "муж" : serviceEntity.sex === "WOMAN" ? "жен" : ""}</dd>
+            <dt>
+              <span id="price">Цена</span>
             </dt>
             <dd>{serviceEntity.price}</dd>
           </dl>
           <Button tag={Link} to="/service" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/service/${serviceEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

@@ -23,28 +23,28 @@ export class MaterialDetail extends React.Component<IMaterialDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Material [<b>{materialEntity.id}</b>]
+            Материал <b>№{materialEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="title">Title</span>
+              <span id="title">Название</span>
             </dt>
             <dd>{materialEntity.title}</dd>
             <dt>
-              <span id="unit">Unit</span>
+              <span id="unit">Единица</span>
             </dt>
             <dd>{materialEntity.unit}</dd>
             <dt>
-              <span id="price">Price</span>
+              <span id="price">Цена</span>
             </dt>
             <dd>{materialEntity.price}</dd>
           </dl>
           <Button tag={Link} to="/material" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/material/${materialEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
           </Button>
         </Col>
       </Row>

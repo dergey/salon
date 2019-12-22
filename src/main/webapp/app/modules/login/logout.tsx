@@ -25,7 +25,7 @@ export class Logout extends React.Component<ILogoutProps> {
 
     return (
       <div className="p-5">
-        <h4>Logged out successfully!</h4>
+        <h4>Выход успешно завершен!</h4>
       </div>
     );
   }

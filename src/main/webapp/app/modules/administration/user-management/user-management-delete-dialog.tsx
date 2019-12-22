@@ -29,16 +29,16 @@ export const UserManagementDeleteDialog = (props: IUserManagementDeleteDialogPro
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose}>Confirm delete operation</ModalHeader>
-      <ModalBody>Are you sure you want to delete this User?</ModalBody>
+      <ModalHeader toggle={handleClose}>Подтвердите удаление</ModalHeader>
+      <ModalBody>Вы уверены, что хотите удалить пользователя {user.login}?</ModalBody>
       <ModalFooter>
         <Button color="secondary" onClick={handleClose}>
           <FontAwesomeIcon icon="ban" />
-          &nbsp; Cancel
+          &nbsp; Отмена
         </Button>
         <Button color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
-          &nbsp; Delete
+          &nbsp; Удалить
         </Button>
       </ModalFooter>
     </Modal>

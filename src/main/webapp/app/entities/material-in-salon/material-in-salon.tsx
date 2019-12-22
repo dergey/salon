@@ -51,10 +51,10 @@ export class MaterialInSalon extends React.Component<IMaterialInSalonProps, IMat
     return (
       <div>
         <h2 id="material-in-salon-heading">
-          Material In Salons
+          Материалы в салонах
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Material In Salon
+            &nbsp; Добавить материал в салон
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,16 +63,16 @@ export class MaterialInSalon extends React.Component<IMaterialInSalonProps, IMat
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('count')}>
-                    Count <FontAwesomeIcon icon="sort" />
+                    Количество <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Material <FontAwesomeIcon icon="sort" />
+                    Материал <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Salon <FontAwesomeIcon icon="sort" />
+                    Салон <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -99,13 +99,13 @@ export class MaterialInSalon extends React.Component<IMaterialInSalonProps, IMat
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${materialInSalon.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${materialInSalon.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${materialInSalon.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -114,7 +114,7 @@ export class MaterialInSalon extends React.Component<IMaterialInSalonProps, IMat
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Material In Salons found</div>
+            <div className="alert alert-warning">Не найдено ни одного материала в салоне</div>
           )}
         </div>
         <div className={materialInSalonList && materialInSalonList.length > 0 ? '' : 'd-none'}>

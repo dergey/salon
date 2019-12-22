@@ -74,7 +74,7 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.salon.home.createOrEditLabel">Create or edit a Salon</h2>
+            <h2 id="salonApp.salon.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} салон</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -85,31 +85,31 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
               <AvForm model={isNew ? {} : salonEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="salon-id">ID</Label>
+                    <Label for="salon-id">Номер</Label>
                     <AvInput id="salon-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="titleLabel" for="salon-title">
-                    Title
+                    Название
                   </Label>
                   <AvField
                     id="salon-title"
                     type="text"
                     name="title"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="salon-location">Location</Label>
+                  <Label for="salon-location">Адрес</Label>
                   <AvInput id="salon-location" type="select" className="form-control" name="location.id">
                     <option value="" key="0" />
                     {locations
                       ? locations.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.country.countryName + ', ' + otherEntity.city + ', ' + otherEntity.address}
                           </option>
                         ))
                       : null}
@@ -118,12 +118,12 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
                 <Button tag={Link} id="cancel-save" to="/salon" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

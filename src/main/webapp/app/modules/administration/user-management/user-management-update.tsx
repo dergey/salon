@@ -44,23 +44,23 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h1>Create or edit a User</h1>
+          <h1>Создать или отредактировать пользователя</h1>
         </Col>
       </Row>
       <Row className="justify-content-center">
         <Col md="8">
           {loading ? (
-            <p>Loading...</p>
+            <p>Загрузка...</p>
           ) : (
             <AvForm onValidSubmit={saveUser}>
               {user.id ? (
                 <AvGroup>
-                  <Label for="id">ID</Label>
+                  <Label for="id">Номер</Label>
                   <AvField type="text" className="form-control" name="id" required readOnly value={user.id} />
                 </AvGroup>
               ) : null}
               <AvGroup>
-                <Label for="login">Login</Label>
+                <Label for="login">Имя пользователя</Label>
                 <AvField
                   type="text"
                   className="form-control"
@@ -68,76 +68,45 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
                   validate={{
                     required: {
                       value: true,
-                      errorMessage: 'Your username is required.'
+                      errorMessage: 'Это поле не может быть пустым.'
                     },
                     pattern: {
                       value: '^[_.@A-Za-z0-9-]*$',
-                      errorMessage: 'Your username can only contain letters and digits.'
+                      errorMessage: 'Это поле может содержать только буквы и цифры.'
                     },
                     minLength: {
                       value: 1,
-                      errorMessage: 'Your username is required to be at least 1 character.'
+                      errorMessage: 'Это поле должно быть не менее 1 символа.'
                     },
                     maxLength: {
                       value: 50,
-                      errorMessage: 'Your username cannot be longer than 50 characters.'
+                      errorMessage: 'Это поле не может быть больше 50 символов.'
                     }
                   }}
                   value={user.login}
                 />
               </AvGroup>
               <AvGroup>
-                <Label for="firstName">First Name</Label>
-                <AvField
-                  type="text"
-                  className="form-control"
-                  name="firstName"
-                  validate={{
-                    maxLength: {
-                      value: 50,
-                      errorMessage: 'This field cannot be longer than 50 characters.'
-                    }
-                  }}
-                  value={user.firstName}
-                />
-              </AvGroup>
-              <AvGroup>
-                <Label for="lastName">Last Name</Label>
-                <AvField
-                  type="text"
-                  className="form-control"
-                  name="lastName"
-                  validate={{
-                    maxLength: {
-                      value: 50,
-                      errorMessage: 'This field cannot be longer than 50 characters.'
-                    }
-                  }}
-                  value={user.lastName}
-                />
-                <AvFeedback>This field cannot be longer than 50 characters.</AvFeedback>
-              </AvGroup>
-              <AvGroup>
                 <AvField
                   name="email"
                   label="Email"
-                  placeholder={'Your email'}
+                  placeholder={'Ваш email'}
                   type="email"
                   validate={{
                     required: {
                       value: true,
-                      errorMessage: 'Your email is required.'
+                      errorMessage: 'Это поле не может быть пустым.'
                     },
                     email: {
-                      errorMessage: 'Your email is invalid.'
+                      errorMessage: 'Это поле должно быть email-ом.'
                     },
                     minLength: {
                       value: 5,
-                      errorMessage: 'Your email is required to be at least 5 characters.'
+                      errorMessage: 'Это поле должно быть более 5 символов.'
                     },
                     maxLength: {
                       value: 254,
-                      errorMessage: 'Your email cannot be longer than 50 characters.'
+                      errorMessage: 'Это поле не может быть длиннее 50 символов.'
                     }
                   }}
                   value={user.email}
@@ -145,11 +114,11 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
               </AvGroup>
               <AvGroup check>
                 <Label>
-                  <AvInput type="checkbox" name="activated" value={user.activated} /> Activated
+                  <AvInput type="checkbox" name="activated" value={user.activated} /> Активен
                 </Label>
               </AvGroup>
               <AvGroup>
-                <Label for="authorities">Language Key</Label>
+                <Label for="authorities">Профили</Label>
                 <AvInput type="select" className="form-control" name="authorities" value={user.authorities} multiple>
                   {roles.map(role => (
                     <option value={role} key={role}>
@@ -161,12 +130,12 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
               <Button tag={Link} to="/admin/user-management" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
-                <span className="d-none d-md-inline">Back</span>
+                <span className="d-none d-md-inline">Назад</span>
               </Button>
               &nbsp;
               <Button color="primary" type="submit" disabled={isInvalid || updating}>
                 <FontAwesomeIcon icon="save" />
-                &nbsp; Save
+                &nbsp; Сохранить
               </Button>
             </AvForm>
           )}

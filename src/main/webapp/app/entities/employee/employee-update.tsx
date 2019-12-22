@@ -80,44 +80,44 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.employee.home.createOrEditLabel">Create or edit a Employee</h2>
+            <h2 id="salonApp.employee.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} сотрудника</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md="8">
             {loading ? (
-              <p>Loading...</p>
+              <p>Загрузка...</p>
             ) : (
               <AvForm model={isNew ? {} : employeeEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="employee-id">ID</Label>
+                    <Label for="employee-id">Номер</Label>
                     <AvInput id="employee-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="firstNameLabel" for="employee-firstName">
-                    First Name
+                    Имя
                   </Label>
                   <AvField
                     id="employee-firstName"
                     type="text"
                     name="firstName"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="lastNameLabel" for="employee-lastName">
-                    Last Name
+                    Фамилия
                   </Label>
                   <AvField
                     id="employee-lastName"
                     type="text"
                     name="lastName"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
@@ -130,26 +130,26 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
                     type="text"
                     name="email"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="phoneNumberLabel" for="employee-phoneNumber">
-                    Phone Number
+                    Телефоный номер
                   </Label>
                   <AvField
                     id="employee-phoneNumber"
                     type="text"
                     name="phoneNumber"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="hireDateLabel" for="employee-hireDate">
-                    Hire Date
+                    Дата найма
                   </Label>
                   <AvInput
                     id="employee-hireDate"
@@ -159,13 +159,13 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
                     placeholder={'YYYY-MM-DD HH:mm'}
                     value={isNew ? null : convertDateTimeFromServer(this.props.employeeEntity.hireDate)}
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="salaryLabel" for="employee-salary">
-                    Salary
+                    Зарплата
                   </Label>
                   <AvField
                     id="employee-salary"
@@ -173,14 +173,14 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
                     className="form-control"
                     name="salary"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' },
+                      number: { value: true, errorMessage: 'Это поле должно быть числом.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="commissionPctLabel" for="employee-commissionPct">
-                    Commission Pct
+                    Комиссионные
                   </Label>
                   <AvField
                     id="employee-commissionPct"
@@ -188,26 +188,26 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
                     className="form-control"
                     name="commissionPct"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' },
+                      number: { value: true, errorMessage: 'Это поле должно быть числом.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="employee-manager">Manager</Label>
+                  <Label for="employee-manager">Менеджер</Label>
                   <AvInput id="employee-manager" type="select" className="form-control" name="manager.id">
                     <option value="" key="0" />
                     {employees
                       ? employees.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.lastName}
+                            {otherEntity.lastName} {otherEntity.firstName}
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="employee-salon">Salon</Label>
+                  <Label for="employee-salon">Парикмахерская</Label>
                   <AvInput id="employee-salon" type="select" className="form-control" name="salon.id">
                     <option value="" key="0" />
                     {salons
@@ -222,12 +222,12 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
                 <Button tag={Link} id="cancel-save" to="/employee" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

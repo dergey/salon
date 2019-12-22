@@ -2,13 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { ICrudGetAction, TextFormat } from 'react-jhipster';
+import { TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './employee.reducer';
-import { IEmployee } from 'app/shared/model/employee.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 
 export interface IEmployeeDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -23,15 +22,15 @@ export class EmployeeDetail extends React.Component<IEmployeeDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Employee [<b>{employeeEntity.id}</b>]
+            Сотрудник <b>№{employeeEntity.id}</b>
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="firstName">First Name</span>
+              <span id="firstName">Имя</span>
             </dt>
             <dd>{employeeEntity.firstName}</dd>
             <dt>
-              <span id="lastName">Last Name</span>
+              <span id="lastName">Фамилия</span>
             </dt>
             <dd>{employeeEntity.lastName}</dd>
             <dt>
@@ -39,34 +38,38 @@ export class EmployeeDetail extends React.Component<IEmployeeDetailProps> {
             </dt>
             <dd>{employeeEntity.email}</dd>
             <dt>
-              <span id="phoneNumber">Phone Number</span>
+              <span id="phoneNumber">Телефон</span>
             </dt>
             <dd>{employeeEntity.phoneNumber}</dd>
             <dt>
-              <span id="hireDate">Hire Date</span>
+              <span id="hireDate">Дата найма</span>
             </dt>
             <dd>
               <TextFormat value={employeeEntity.hireDate} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="salary">Salary</span>
+              <span id="salary">Зарплата</span>
             </dt>
             <dd>{employeeEntity.salary}</dd>
             <dt>
-              <span id="commissionPct">Commission Pct</span>
+              <span id="commissionPct">Коммисионные</span>
             </dt>
             <dd>{employeeEntity.commissionPct}</dd>
-            <dt>Manager</dt>
-            <dd>{employeeEntity.manager ? employeeEntity.manager.lastName : ''}</dd>
-            <dt>Salon</dt>
+            <dt>Менеджер</dt>
+            <dd>{employeeEntity.manager ? employeeEntity.manager.lastName + ' ' + employeeEntity.manager.firstName : ''}</dd>
+            <dt>Парикмахерская</dt>
             <dd>{employeeEntity.salon ? employeeEntity.salon.title : ''}</dd>
           </dl>
           <Button tag={Link} to="/employee" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/employee/${employeeEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
+          </Button>
+          &nbsp;
+          <Button tag={Link} to={`/employee/${employeeEntity.id}/schedule`} replace color="primary">
+            <FontAwesomeIcon icon="calendar-alt" /> <span className="d-none d-md-inline">Расписание</span>
           </Button>
         </Col>
       </Row>

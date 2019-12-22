@@ -1,5 +1,7 @@
 package com.sergey.zhuravlev.salon.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -22,8 +24,8 @@ public class Country implements Serializable {
     @Column(name = "country_name", nullable = false)
     private String countryName;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("countries")
     private Region region;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

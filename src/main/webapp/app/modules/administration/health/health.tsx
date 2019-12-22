@@ -38,11 +38,11 @@ export const HealthPage = (props: IHealthPageProps) => {
 
   return (
     <div>
-      <h2 id="health-page-heading">Health Checks</h2>
+      <h2 id="health-page-heading">Здоровье</h2>
       <p>
         <Button onClick={getSystemHealth} color={isFetching ? 'btn btn-danger' : 'btn btn-primary'} disabled={isFetching}>
           <FontAwesomeIcon icon="sync" />
-          &nbsp; Refresh
+          &nbsp; Обновить
         </Button>
       </p>
       <Row>
@@ -50,9 +50,9 @@ export const HealthPage = (props: IHealthPageProps) => {
           <Table bordered aria-describedby="health-page-heading">
             <thead>
               <tr>
-                <th>Service Name</th>
-                <th>Status</th>
-                <th>Details</th>
+                <th>Имя сервиса</th>
+                <th>Статус</th>
+                <th>Подробности</th>
               </tr>
             </thead>
             <tbody>
@@ -61,7 +61,7 @@ export const HealthPage = (props: IHealthPageProps) => {
                   <tr key={configPropIndex}>
                     <td>{configPropKey}</td>
                     <td>
-                      <Badge color={data[configPropKey].status !== 'UP' ? 'danger' : 'success'}>{data[configPropKey].status}</Badge>
+                      <Badge color={data[configPropKey].status !== 'UP' ? 'danger' : 'success'}>{data[configPropKey].status === 'UP' ? 'РАБОТАЕТ' : 'НЕ РАБОТАЕТ'}</Badge>
                     </td>
                     <td>
                       {data[configPropKey].details ? (

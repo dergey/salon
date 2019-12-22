@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './salon.reducer';
-import { ISalon } from 'app/shared/model/salon.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface ISalonProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -51,10 +49,10 @@ export class Salon extends React.Component<ISalonProps, ISalonState> {
     return (
       <div>
         <h2 id="salon-heading">
-          Salons
+          Салоны
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Salon
+            &nbsp; Создать новый салон
           </Link>
         </h2>
         <div className="table-responsive">
@@ -63,13 +61,13 @@ export class Salon extends React.Component<ISalonProps, ISalonState> {
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>
-                    ID <FontAwesomeIcon icon="sort" />
+                    Номер <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('title')}>
-                    Title <FontAwesomeIcon icon="sort" />
+                    Название <FontAwesomeIcon icon="sort" />
                   </th>
                   <th>
-                    Location <FontAwesomeIcon icon="sort" />
+                    Адрес <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -83,17 +81,21 @@ export class Salon extends React.Component<ISalonProps, ISalonState> {
                       </Button>
                     </td>
                     <td>{salon.title}</td>
-                    <td>{salon.location ? <Link to={`location/${salon.location.id}`}>{salon.location.id}</Link> : ''}</td>
+                    <td>{salon.location ?
+                      <Link to={`location/${salon.location.id}`}>
+                        {salon.location.country.countryName + ', ' + salon.location.city + ', ' + salon.location.address}
+                      </Link> : ''}
+                    </td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${salon.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                          <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${salon.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
                         </Button>
                         <Button tag={Link} to={`${match.url}/${salon.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
                         </Button>
                       </div>
                     </td>
@@ -102,7 +104,7 @@ export class Salon extends React.Component<ISalonProps, ISalonState> {
               </tbody>
             </Table>
           ) : (
-            <div className="alert alert-warning">No Salons found</div>
+            <div className="alert alert-warning">Не найдено ни одного салона</div>
           )}
         </div>
         <div className={salonList && salonList.length > 0 ? '' : 'd-none'}>

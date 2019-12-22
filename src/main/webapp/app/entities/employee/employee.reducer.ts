@@ -5,10 +5,12 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IEmployee, defaultValue } from 'app/shared/model/employee.model';
+import { IEmployeeSchedule, defaultScheduleValue } from 'app/shared/model/employee.schedule.model';
 
 export const ACTION_TYPES = {
   FETCH_EMPLOYEE_LIST: 'employee/FETCH_EMPLOYEE_LIST',
   FETCH_EMPLOYEE: 'employee/FETCH_EMPLOYEE',
+  FETCH_EMPLOYEE_SCHEDULE: 'employee/FETCH_EMPLOYEE_SCHEDULE',
   CREATE_EMPLOYEE: 'employee/CREATE_EMPLOYEE',
   UPDATE_EMPLOYEE: 'employee/UPDATE_EMPLOYEE',
   DELETE_EMPLOYEE: 'employee/DELETE_EMPLOYEE',
@@ -19,6 +21,7 @@ const initialState = {
   loading: false,
   errorMessage: null,
   entities: [] as ReadonlyArray<IEmployee>,
+  schedule: defaultScheduleValue,
   entity: defaultValue,
   updating: false,
   totalItems: 0,
@@ -33,6 +36,7 @@ export default (state: EmployeeState = initialState, action): EmployeeState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_EMPLOYEE_LIST):
     case REQUEST(ACTION_TYPES.FETCH_EMPLOYEE):
+    case REQUEST(ACTION_TYPES.FETCH_EMPLOYEE_SCHEDULE):
       return {
         ...state,
         errorMessage: null,
@@ -48,6 +52,7 @@ export default (state: EmployeeState = initialState, action): EmployeeState => {
         updateSuccess: false,
         updating: true
       };
+    case FAILURE(ACTION_TYPES.FETCH_EMPLOYEE_SCHEDULE):
     case FAILURE(ACTION_TYPES.FETCH_EMPLOYEE_LIST):
     case FAILURE(ACTION_TYPES.FETCH_EMPLOYEE):
     case FAILURE(ACTION_TYPES.CREATE_EMPLOYEE):
@@ -66,6 +71,12 @@ export default (state: EmployeeState = initialState, action): EmployeeState => {
         loading: false,
         entities: action.payload.data,
         totalItems: parseInt(action.payload.headers['x-total-count'], 10)
+      };
+    case SUCCESS(ACTION_TYPES.FETCH_EMPLOYEE_SCHEDULE):
+      return {
+        ...state,
+        loading: false,
+        schedule: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_EMPLOYEE):
       return {
@@ -114,6 +125,14 @@ export const getEntity: ICrudGetAction<IEmployee> = id => {
   return {
     type: ACTION_TYPES.FETCH_EMPLOYEE,
     payload: axios.get<IEmployee>(requestUrl)
+  };
+};
+
+export const getEntityScheduler: ICrudGetAction<IEmployeeSchedule> = id => {
+  const requestUrl = `${apiUrl}/${id}/schedule`;
+  return {
+    type: ACTION_TYPES.FETCH_EMPLOYEE_SCHEDULE,
+    payload: axios.get<IEmployeeSchedule>(requestUrl)
   };
 };
 

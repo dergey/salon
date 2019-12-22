@@ -68,7 +68,7 @@ export class ClientUpdate extends React.Component<IClientUpdateProps, IClientUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="salonApp.client.home.createOrEditLabel">Create or edit a Client</h2>
+            <h2 id="salonApp.client.home.createOrEditLabel">{isNew ? 'Создать' : 'Редактировать'} клиента</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -79,33 +79,33 @@ export class ClientUpdate extends React.Component<IClientUpdateProps, IClientUpd
               <AvForm model={isNew ? {} : clientEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="client-id">ID</Label>
+                    <Label for="client-id">Номер</Label>
                     <AvInput id="client-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="firstNameLabel" for="client-firstName">
-                    First Name
+                    Имя
                   </Label>
                   <AvField
                     id="client-firstName"
                     type="text"
                     name="firstName"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="lastNameLabel" for="client-lastName">
-                    Last Name
+                    Фамилия
                   </Label>
                   <AvField
                     id="client-lastName"
                     type="text"
                     name="lastName"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
                   />
                 </AvGroup>
@@ -117,35 +117,36 @@ export class ClientUpdate extends React.Component<IClientUpdateProps, IClientUpd
                 </AvGroup>
                 <AvGroup>
                   <Label id="phoneNumberLabel" for="client-phoneNumber">
-                    Phone Number
+                    Телефон
                   </Label>
                   <AvField
                     id="client-phoneNumber"
                     type="text"
                     name="phoneNumber"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Номер телефона необходимое поле.' },
+                      pattern: { value: '^[0-9+-]*$', errorMessage: 'Номер телефона может содержать только цифры.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="sexLabel" for="client-sex">
-                    Sex
+                    Пол
                   </Label>
                   <AvInput id="client-sex" type="select" className="form-control" name="sex" value={(!isNew && clientEntity.sex) || 'MAN'}>
-                    <option value="MAN">MAN</option>
-                    <option value="WOMAN">WOMAN</option>
+                    <option value="MAN">муж</option>
+                    <option value="WOMAN">жен</option>
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/client" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />
-                  &nbsp; Save
+                  &nbsp; Сохранить
                 </Button>
               </AvForm>
             )}

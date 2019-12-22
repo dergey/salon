@@ -30,16 +30,16 @@ export class ClientDeleteDialog extends React.Component<IClientDeleteDialogProps
     const { clientEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="salonApp.client.delete.question">Are you sure you want to delete this Client?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
+        <ModalBody id="salonApp.client.delete.question">Вы уверены, что хотите удалить клиента {clientEntity.firstName + ' ' + clientEntity.lastName}?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            &nbsp; Отмена
           </Button>
           <Button id="jhi-confirm-delete-client" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            &nbsp; Удалить
           </Button>
         </ModalFooter>
       </Modal>

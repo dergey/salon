@@ -94,12 +94,13 @@ public class ClientResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Client createEntity(EntityManager em) {
-        Client client = new Client()
+        Client client = Client.builder()
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
             .email(DEFAULT_EMAIL)
             .phoneNumber(DEFAULT_PHONE_NUMBER)
-            .sex(DEFAULT_SEX);
+            .sex(DEFAULT_SEX)
+            .build();
         return client;
     }
     /**
@@ -109,12 +110,13 @@ public class ClientResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Client createUpdatedEntity(EntityManager em) {
-        Client client = new Client()
+        Client client = Client.builder()
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .email(UPDATED_EMAIL)
             .phoneNumber(UPDATED_PHONE_NUMBER)
-            .sex(UPDATED_SEX);
+            .sex(UPDATED_SEX)
+            .build();
         return client;
     }
 
@@ -293,12 +295,11 @@ public class ClientResourceIT {
         Client updatedClient = clientRepository.findById(client.getId()).get();
         // Disconnect from session so that the updates on updatedClient are not directly saved in db
         em.detach(updatedClient);
-        updatedClient
-            .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .email(UPDATED_EMAIL)
-            .phoneNumber(UPDATED_PHONE_NUMBER)
-            .sex(UPDATED_SEX);
+        updatedClient.setFirstName(UPDATED_FIRST_NAME);
+        updatedClient.setLastName(UPDATED_LAST_NAME);
+        updatedClient.setEmail(UPDATED_EMAIL);
+        updatedClient.setPhoneNumber(UPDATED_PHONE_NUMBER);
+        updatedClient.setSex(UPDATED_SEX);
 
         restClientMockMvc.perform(put("/api/clients")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
