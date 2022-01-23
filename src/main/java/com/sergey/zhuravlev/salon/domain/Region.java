@@ -1,13 +1,16 @@
 package com.sergey.zhuravlev.salon.domain;
 
+import com.sergey.zhuravlev.salon.domain.enumeration.RegionStatus;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
-/**
- * A Region.
- */
+@Getter
+@Setter
 @Entity
 @Table(name = "region")
 public class Region implements Serializable {
@@ -18,32 +21,13 @@ public class Region implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 20, nullable = false)
+    private RegionStatus status;
+
     @NotNull
     @Column(name = "region_name", nullable = false)
     private String regionName;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRegionName() {
-        return regionName;
-    }
-
-    public Region regionName(String regionName) {
-        this.regionName = regionName;
-        return this;
-    }
-
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

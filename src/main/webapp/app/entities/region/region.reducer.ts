@@ -1,17 +1,15 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
-import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IRegion, defaultValue } from 'app/shared/model/region.model';
+import { RegionStatus } from 'app/shared/model/enumerations/region-status.model';
 
 export const ACTION_TYPES = {
   FETCH_REGION_LIST: 'region/FETCH_REGION_LIST',
   FETCH_REGION: 'region/FETCH_REGION',
-  CREATE_REGION: 'region/CREATE_REGION',
-  UPDATE_REGION: 'region/UPDATE_REGION',
-  DELETE_REGION: 'region/DELETE_REGION',
+  CHANGE_STATUS_REGION: 'region/CHANGE_STATUS_REGION',
   RESET: 'region/RESET'
 };
 
@@ -38,9 +36,7 @@ export default (state: RegionState = initialState, action): RegionState => {
         updateSuccess: false,
         loading: true
       };
-    case REQUEST(ACTION_TYPES.CREATE_REGION):
-    case REQUEST(ACTION_TYPES.UPDATE_REGION):
-    case REQUEST(ACTION_TYPES.DELETE_REGION):
+    case REQUEST(ACTION_TYPES.CHANGE_STATUS_REGION):
       return {
         ...state,
         errorMessage: null,
@@ -49,9 +45,7 @@ export default (state: RegionState = initialState, action): RegionState => {
       };
     case FAILURE(ACTION_TYPES.FETCH_REGION_LIST):
     case FAILURE(ACTION_TYPES.FETCH_REGION):
-    case FAILURE(ACTION_TYPES.CREATE_REGION):
-    case FAILURE(ACTION_TYPES.UPDATE_REGION):
-    case FAILURE(ACTION_TYPES.DELETE_REGION):
+    case FAILURE(ACTION_TYPES.CHANGE_STATUS_REGION):
       return {
         ...state,
         loading: false,
@@ -71,15 +65,7 @@ export default (state: RegionState = initialState, action): RegionState => {
         loading: false,
         entity: action.payload.data
       };
-    case SUCCESS(ACTION_TYPES.CREATE_REGION):
-    case SUCCESS(ACTION_TYPES.UPDATE_REGION):
-      return {
-        ...state,
-        updating: false,
-        updateSuccess: true,
-        entity: action.payload.data
-      };
-    case SUCCESS(ACTION_TYPES.DELETE_REGION):
+    case SUCCESS(ACTION_TYPES.CHANGE_STATUS_REGION):
       return {
         ...state,
         updating: false,
@@ -112,29 +98,12 @@ export const getEntity: ICrudGetAction<IRegion> = id => {
   };
 };
 
-export const createEntity: ICrudPutAction<IRegion> = entity => async dispatch => {
+export const changeStatusEntity: ICrudPutAction<IRegion> = entity => async dispatch => {
+  const action = entity.status === RegionStatus.ACTIVATED ? 'deactivate' : 'activate';
+  const requestUrl = `${apiUrl}/${entity.id}/${action}`;
   const result = await dispatch({
-    type: ACTION_TYPES.CREATE_REGION,
-    payload: axios.post(apiUrl, cleanEntity(entity))
-  });
-  dispatch(getEntities());
-  return result;
-};
-
-export const updateEntity: ICrudPutAction<IRegion> = entity => async dispatch => {
-  const result = await dispatch({
-    type: ACTION_TYPES.UPDATE_REGION,
-    payload: axios.put(apiUrl, cleanEntity(entity))
-  });
-  dispatch(getEntities());
-  return result;
-};
-
-export const deleteEntity: ICrudDeleteAction<IRegion> = id => async dispatch => {
-  const requestUrl = `${apiUrl}/${id}`;
-  const result = await dispatch({
-    type: ACTION_TYPES.DELETE_REGION,
-    payload: axios.delete(requestUrl)
+    type: ACTION_TYPES.CHANGE_STATUS_REGION,
+    payload: axios.post(requestUrl)
   });
   dispatch(getEntities());
   return result;

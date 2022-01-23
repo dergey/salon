@@ -74,90 +74,6 @@ public class RegionResourceIT {
             .setValidator(validator).build();
     }
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Region createEntity(EntityManager em) {
-        Region region = new Region()
-            .regionName(DEFAULT_REGION_NAME);
-        return region;
-    }
-    /**
-     * Create an updated entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Region createUpdatedEntity(EntityManager em) {
-        Region region = new Region()
-            .regionName(UPDATED_REGION_NAME);
-        return region;
-    }
-
-    @BeforeEach
-    public void initTest() {
-        region = createEntity(em);
-    }
-
-    @Test
-    @Transactional
-    public void createRegion() throws Exception {
-        int databaseSizeBeforeCreate = regionRepository.findAll().size();
-
-        // Create the Region
-        restRegionMockMvc.perform(post("/api/regions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(region)))
-            .andExpect(status().isCreated());
-
-        // Validate the Region in the database
-        List<Region> regionList = regionRepository.findAll();
-        assertThat(regionList).hasSize(databaseSizeBeforeCreate + 1);
-        Region testRegion = regionList.get(regionList.size() - 1);
-        assertThat(testRegion.getRegionName()).isEqualTo(DEFAULT_REGION_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void createRegionWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = regionRepository.findAll().size();
-
-        // Create the Region with an existing ID
-        region.setId(1L);
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restRegionMockMvc.perform(post("/api/regions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(region)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Region in the database
-        List<Region> regionList = regionRepository.findAll();
-        assertThat(regionList).hasSize(databaseSizeBeforeCreate);
-    }
-
-
-    @Test
-    @Transactional
-    public void checkRegionNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = regionRepository.findAll().size();
-        // set the field null
-        region.setRegionName(null);
-
-        // Create the Region, which fails.
-
-        restRegionMockMvc.perform(post("/api/regions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(region)))
-            .andExpect(status().isBadRequest());
-
-        List<Region> regionList = regionRepository.findAll();
-        assertThat(regionList).hasSize(databaseSizeBeforeTest);
-    }
-
     @Test
     @Transactional
     public void getAllRegions() throws Exception {
@@ -171,7 +87,7 @@ public class RegionResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(region.getId().intValue())))
             .andExpect(jsonPath("$.[*].regionName").value(hasItem(DEFAULT_REGION_NAME)));
     }
-    
+
     @Test
     @Transactional
     public void getRegion() throws Exception {
@@ -194,66 +110,4 @@ public class RegionResourceIT {
             .andExpect(status().isNotFound());
     }
 
-    @Test
-    @Transactional
-    public void updateRegion() throws Exception {
-        // Initialize the database
-        regionService.save(region);
-
-        int databaseSizeBeforeUpdate = regionRepository.findAll().size();
-
-        // Update the region
-        Region updatedRegion = regionRepository.findById(region.getId()).get();
-        // Disconnect from session so that the updates on updatedRegion are not directly saved in db
-        em.detach(updatedRegion);
-        updatedRegion
-            .regionName(UPDATED_REGION_NAME);
-
-        restRegionMockMvc.perform(put("/api/regions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedRegion)))
-            .andExpect(status().isOk());
-
-        // Validate the Region in the database
-        List<Region> regionList = regionRepository.findAll();
-        assertThat(regionList).hasSize(databaseSizeBeforeUpdate);
-        Region testRegion = regionList.get(regionList.size() - 1);
-        assertThat(testRegion.getRegionName()).isEqualTo(UPDATED_REGION_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void updateNonExistingRegion() throws Exception {
-        int databaseSizeBeforeUpdate = regionRepository.findAll().size();
-
-        // Create the Region
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restRegionMockMvc.perform(put("/api/regions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(region)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Region in the database
-        List<Region> regionList = regionRepository.findAll();
-        assertThat(regionList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    public void deleteRegion() throws Exception {
-        // Initialize the database
-        regionService.save(region);
-
-        int databaseSizeBeforeDelete = regionRepository.findAll().size();
-
-        // Delete the region
-        restRegionMockMvc.perform(delete("/api/regions/{id}", region.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isNoContent());
-
-        // Validate the database contains one less item
-        List<Region> regionList = regionRepository.findAll();
-        assertThat(regionList).hasSize(databaseSizeBeforeDelete - 1);
-    }
 }

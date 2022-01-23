@@ -5,17 +5,10 @@ import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {
-  ACTION_TYPES,
-  createEntity,
-  deleteEntity,
-  getEntities,
-  getEntity,
-  updateEntity,
-  reset
-} from 'app/entities/region/region.reducer';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { IRegion, defaultValue } from 'app/shared/model/region.model';
+import reducer, { ACTION_TYPES, changeStatusEntity, getEntities, getEntity, reset } from 'app/entities/region/region.reducer';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
+import { defaultValue, IRegion } from 'app/shared/model/region.model';
+import { RegionStatus } from 'app/shared/model/enumerations/region-status.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
@@ -70,17 +63,13 @@ describe('Entities reducer tests', () => {
     });
 
     it('should set state to updating', () => {
-      testMultipleTypes(
-        [REQUEST(ACTION_TYPES.CREATE_REGION), REQUEST(ACTION_TYPES.UPDATE_REGION), REQUEST(ACTION_TYPES.DELETE_REGION)],
-        {},
-        state => {
-          expect(state).toMatchObject({
-            errorMessage: null,
-            updateSuccess: false,
-            updating: true
-          });
-        }
-      );
+      testMultipleTypes([REQUEST(ACTION_TYPES.CHANGE_STATUS_REGION)], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          updating: true
+        });
+      });
     });
 
     it('should reset the state', () => {
@@ -100,13 +89,7 @@ describe('Entities reducer tests', () => {
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
       testMultipleTypes(
-        [
-          FAILURE(ACTION_TYPES.FETCH_REGION_LIST),
-          FAILURE(ACTION_TYPES.FETCH_REGION),
-          FAILURE(ACTION_TYPES.CREATE_REGION),
-          FAILURE(ACTION_TYPES.UPDATE_REGION),
-          FAILURE(ACTION_TYPES.DELETE_REGION)
-        ],
+        [FAILURE(ACTION_TYPES.FETCH_REGION_LIST), FAILURE(ACTION_TYPES.FETCH_REGION), FAILURE(ACTION_TYPES.CHANGE_STATUS_REGION)],
         'error message',
         state => {
           expect(state).toMatchObject({
@@ -148,25 +131,10 @@ describe('Entities reducer tests', () => {
       });
     });
 
-    it('should create/update entity', () => {
-      const payload = { data: 'fake payload' };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.CREATE_REGION),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        updating: false,
-        updateSuccess: true,
-        entity: payload.data
-      });
-    });
-
-    it('should delete entity', () => {
+    it('should change status of entity', () => {
       const payload = 'fake payload';
       const toTest = reducer(undefined, {
-        type: SUCCESS(ACTION_TYPES.DELETE_REGION),
+        type: SUCCESS(ACTION_TYPES.CHANGE_STATUS_REGION),
         payload
       });
       expect(toTest).toMatchObject({
@@ -215,13 +183,13 @@ describe('Entities reducer tests', () => {
       await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.CREATE_REGION actions', async () => {
+    it('dispatches ACTION_TYPES.CHANGE_STATUS_REGION actions', async () => {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.CREATE_REGION)
+          type: REQUEST(ACTION_TYPES.CHANGE_STATUS_REGION)
         },
         {
-          type: SUCCESS(ACTION_TYPES.CREATE_REGION),
+          type: SUCCESS(ACTION_TYPES.CHANGE_STATUS_REGION),
           payload: resolvedObject
         },
         {
@@ -232,47 +200,9 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         }
       ];
-      await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.UPDATE_REGION actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.UPDATE_REGION)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.UPDATE_REGION),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_REGION_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_REGION_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.DELETE_REGION actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.DELETE_REGION)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.DELETE_REGION),
-          payload: resolvedObject
-        },
-        {
-          type: REQUEST(ACTION_TYPES.FETCH_REGION_LIST)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.FETCH_REGION_LIST),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store
+        .dispatch(changeStatusEntity({ id: 42666, status: RegionStatus.ACTIVATED }))
+        .then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.RESET actions', async () => {

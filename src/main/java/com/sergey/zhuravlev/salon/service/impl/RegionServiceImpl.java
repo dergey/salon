@@ -1,5 +1,6 @@
 package com.sergey.zhuravlev.salon.service.impl;
 
+import com.sergey.zhuravlev.salon.domain.enumeration.RegionStatus;
 import com.sergey.zhuravlev.salon.service.RegionService;
 import com.sergey.zhuravlev.salon.domain.Region;
 import com.sergey.zhuravlev.salon.repository.RegionRepository;
@@ -28,18 +29,6 @@ public class RegionServiceImpl implements RegionService {
     }
 
     /**
-     * Save a region.
-     *
-     * @param region the entity to save.
-     * @return the persisted entity.
-     */
-    @Override
-    public Region save(Region region) {
-        log.debug("Request to save Region : {}", region);
-        return regionRepository.save(region);
-    }
-
-    /**
      * Get all the regions.
      *
      * @return the list of entities.
@@ -65,14 +54,17 @@ public class RegionServiceImpl implements RegionService {
         return regionRepository.findById(id);
     }
 
-    /**
-     * Delete the region by id.
-     *
-     * @param id the id of the entity.
-     */
     @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Region : {}", id);
-        regionRepository.deleteById(id);
+    public void activate(Long id) {
+        log.debug("Request to activate Region : {}", id);
+        Region region = regionRepository.getOne(id);
+        region.setStatus(RegionStatus.ACTIVATED);
+    }
+
+    @Override
+    public void deactivate(Long id) {
+        log.debug("Request to deactivate Region : {}", id);
+        Region region = regionRepository.getOne(id);
+        region.setStatus(RegionStatus.DEACTIVATED);
     }
 }

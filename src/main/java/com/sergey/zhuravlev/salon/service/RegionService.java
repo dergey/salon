@@ -11,14 +11,6 @@ import java.util.Optional;
 public interface RegionService {
 
     /**
-     * Save a region.
-     *
-     * @param region the entity to save.
-     * @return the persisted entity.
-     */
-    Region save(Region region);
-
-    /**
      * Get all the regions.
      *
      * @return the list of entities.
@@ -35,9 +27,17 @@ public interface RegionService {
     Optional<Region> findOne(Long id);
 
     /**
-     * Delete the "id" region.
+     * Activate region.
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
+    void activate(Long id);
+
+    /**
+     * Deactivate region.
+     *
+     * @param id the id of the entity.
+     */
+    void deactivate(Long id);
+
 }

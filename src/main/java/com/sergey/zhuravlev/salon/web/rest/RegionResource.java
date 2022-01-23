@@ -1,32 +1,26 @@
 package com.sergey.zhuravlev.salon.web.rest;
 
 import com.sergey.zhuravlev.salon.domain.Region;
+import com.sergey.zhuravlev.salon.security.AuthoritiesConstants;
 import com.sergey.zhuravlev.salon.service.RegionService;
-import com.sergey.zhuravlev.salon.web.rest.errors.BadRequestAlertException;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * REST controller for managing {@link com.sergey.zhuravlev.salon.domain.Region}.
- */
+@Slf4j
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class RegionResource {
-
-    private final Logger log = LoggerFactory.getLogger(RegionResource.class);
 
     private static final String ENTITY_NAME = "region";
 
@@ -34,50 +28,6 @@ public class RegionResource {
     private String applicationName;
 
     private final RegionService regionService;
-
-    public RegionResource(RegionService regionService) {
-        this.regionService = regionService;
-    }
-
-    /**
-     * {@code POST  /regions} : Create a new region.
-     *
-     * @param region the region to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new region, or with status {@code 400 (Bad Request)} if the region has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PostMapping("/regions")
-    public ResponseEntity<Region> createRegion(@Valid @RequestBody Region region) throws URISyntaxException {
-        log.debug("REST request to save Region : {}", region);
-        if (region.getId() != null) {
-            throw new BadRequestAlertException("A new region cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        Region result = regionService.save(region);
-        return ResponseEntity.created(new URI("/api/regions/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * {@code PUT  /regions} : Updates an existing region.
-     *
-     * @param region the region to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated region,
-     * or with status {@code 400 (Bad Request)} if the region is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the region couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/regions")
-    public ResponseEntity<Region> updateRegion(@Valid @RequestBody Region region) throws URISyntaxException {
-        log.debug("REST request to update Region : {}", region);
-        if (region.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        Region result = regionService.save(region);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, region.getId().toString()))
-            .body(result);
-    }
 
     /**
      * {@code GET  /regions} : get all the regions.
@@ -104,16 +54,34 @@ public class RegionResource {
         return ResponseUtil.wrapOrNotFound(region);
     }
 
-    /**
-     * {@code DELETE  /regions/:id} : delete the "id" region.
-     *
-     * @param id the id of the region to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/regions/{id}")
-    public ResponseEntity<Void> deleteRegion(@PathVariable Long id) {
-        log.debug("REST request to delete Region : {}", id);
-        regionService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+    @PostMapping("/regions/{id}/activate")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Region> activateRegion(@PathVariable Long id) {
+        log.debug("REST request to activate Region : {}", id);
+        Optional<Region> region = regionService.findOne(id);
+        if (region.isPresent()) {
+            regionService.activate(id);
+            return ResponseEntity.noContent()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString()))
+                .build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+    @PostMapping("/regions/{id}/deactivate")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Region> deactivateRegion(@PathVariable Long id) {
+        log.debug("REST request to deactivate Region : {}", id);
+        Optional<Region> region = regionService.findOne(id);
+        if (region.isPresent()) {
+            regionService.deactivate(id);
+            return ResponseEntity.noContent()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, id.toString()))
+                .build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

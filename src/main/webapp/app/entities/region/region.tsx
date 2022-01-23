@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { ICrudGetAllAction } from 'react-jhipster';
+import { Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './region.reducer';
-import { IRegion } from 'app/shared/model/region.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { RegionStatus } from "app/shared/model/enumerations/region-status.model";
+import { hasAnyAuthority } from "app/shared/auth/private-route";
+import { AUTHORITIES } from "app/config/constants";
 
 export interface IRegionProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -18,15 +18,11 @@ export class Region extends React.Component<IRegionProps> {
   }
 
   render() {
-    const { regionList, match } = this.props;
+    const { regionList, isAdmin, match } = this.props;
     return (
       <div>
         <h2 id="region-heading">
           Регионы
-          <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp; Создать новый регион
-          </Link>
         </h2>
         <div className="table-responsive">
           {regionList && regionList.length > 0 ? (
@@ -35,6 +31,7 @@ export class Region extends React.Component<IRegionProps> {
                 <tr>
                   <th>Номер</th>
                   <th>Название</th>
+                  <th>Статус</th>
                   <th />
                 </tr>
               </thead>
@@ -47,17 +44,15 @@ export class Region extends React.Component<IRegionProps> {
                       </Button>
                     </td>
                     <td>{region.regionName}</td>
+                    <td>{region.status === RegionStatus.ACTIVATED ? 'Активирован' : 'Деактивирован'}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${region.id}`} color="info" size="sm">
                           <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Просмотр</span>
                         </Button>
-                        <Button tag={Link} to={`${match.url}/${region.id}/edit`} color="primary" size="sm">
-                          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Редактировать</span>
-                        </Button>
-                        <Button tag={Link} to={`${match.url}/${region.id}/delete`} color="danger" size="sm">
-                          <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Удалить</span>
-                        </Button>
+                        {isAdmin && <Button tag={Link} to={`${match.url}/${region.id}/changeStatus`} color="primary" size="sm">
+                          <FontAwesomeIcon icon="sync" /> <span className="d-none d-md-inline">Активировать/Деактивировать</span>
+                        </Button>}
                       </div>
                     </td>
                   </tr>
@@ -73,8 +68,9 @@ export class Region extends React.Component<IRegionProps> {
   }
 }
 
-const mapStateToProps = ({ region }: IRootState) => ({
-  regionList: region.entities
+const mapStateToProps = ({ authentication: { account }, region }: IRootState) => ({
+  regionList: region.entities,
+  isAdmin: hasAnyAuthority(account.authorities, [AUTHORITIES.ADMIN])
 });
 
 const mapDispatchToProps = {
