@@ -1,10 +1,8 @@
 package com.sergey.zhuravlev.salon.config;
 
-import com.sergey.zhuravlev.salon.security.*;
-import com.sergey.zhuravlev.salon.security.jwt.*;
-
-import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.InitializingBean;
+import com.sergey.zhuravlev.salon.security.AuthoritiesConstants;
+import com.sergey.zhuravlev.salon.security.jwt.JWTConfigurer;
+import com.sergey.zhuravlev.salon.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;

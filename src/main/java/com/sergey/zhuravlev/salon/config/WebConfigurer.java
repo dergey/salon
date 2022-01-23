@@ -3,6 +3,7 @@ package com.sergey.zhuravlev.salon.config;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.*;
@@ -26,13 +27,9 @@ import java.util.*;
 
 import static java.net.URLDecoder.decode;
 
-/**
- * Configuration of web application with Servlet 3.0 APIs.
- */
+@Slf4j
 @Configuration
 public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
-
-    private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
     private final Environment env;
 
@@ -55,9 +52,6 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         log.info("Web application fully configured");
     }
 
-    /**
-     * Customize the Servlet engine: Mime types, the document root, the cache.
-     */
     @Override
     public void customize(WebServerFactory server) {
         setMimeMappings(server);
@@ -89,9 +83,6 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
     }
 
-    /**
-     * Resolve path prefix to static resources.
-     */
     private String resolvePathPrefix() {
         String fullExecutablePath;
         try {
@@ -109,9 +100,6 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         return extractedPath.substring(0, extractionEndIndex);
     }
 
-    /**
-     * Initializes the caching HTTP Headers Filter.
-     */
     private void initCachingHttpHeadersFilter(ServletContext servletContext,
                                               EnumSet<DispatcherType> disps) {
         log.debug("Registering Caching HTTP Headers Filter");
