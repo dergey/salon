@@ -42,7 +42,7 @@ public class Client implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "sex", nullable = false)
+    @Column(name = "sex", length = 20, nullable = false)
     private Sex sex;
 
 }

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="autoIncrement" value="true"/>
+
+    <changeSet id="0000001" author="dergey@gmail.com">
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar(50)">
+                <constraints unique="true" nullable="false" uniqueConstraintName="ux_user_login"/>
+            </column>
+            <column name="password_hash" type="varchar(60)"/>
+            <column name="email" type="varchar(191)">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_email"/>
+            </column>
+            <column name="activated" type="boolean" valueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lang_key" type="varchar(10)"/>
+            <column name="activation_key" type="varchar(20)"/>
+            <column name="reset_key" type="varchar(20)"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="reset_date" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="authority">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_authority">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="user_authority"/>
+
+        <addForeignKeyConstraint baseColumnNames="authority_name"
+                                 baseTableName="user_authority"
+                                 constraintName="fk_authority_name"
+                                 referencedColumnNames="name"
+                                 referencedTableName="authority"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_authority"
+                                 constraintName="fk_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <addNotNullConstraint columnName="password_hash"
+                              columnDataType="varchar(60)"
+                              tableName="user"/>
+        <loadData
+            file="config/liquibase/data/user.csv"
+            separator=";"
+            tableName="user">
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+        <dropDefaultValue tableName="user" columnName="created_date" columnDataType="datetime"/>
+        <loadData
+            file="config/liquibase/data/authority.csv"
+            separator=";"
+            tableName="authority"/>
+
+        <loadData
+            file="config/liquibase/data/user_authority.csv"
+            separator=";"
+            tableName="user_authority"/>
+        <createTable tableName="persistent_audit_event">
+            <column name="event_id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="principal" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_date" type="timestamp"/>
+            <column name="event_type" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="persistent_audit_evt_data">
+            <column name="event_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="varchar(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="event_id, name" tableName="persistent_audit_evt_data"/>
+
+        <createIndex indexName="idx_persistent_audit_event"
+                     tableName="persistent_audit_event"
+                     unique="false">
+            <column name="principal" type="varchar(50)"/>
+            <column name="event_date" type="timestamp"/>
+        </createIndex>
+
+        <createIndex indexName="idx_persistent_audit_evt_data"
+                     tableName="persistent_audit_evt_data"
+                     unique="false">
+            <column name="event_id" type="bigint"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="persistent_audit_evt_data"
+                                 constraintName="fk_evt_pers_audit_evt_data"
+                                 referencedColumnNames="event_id"
+                                 referencedTableName="persistent_audit_event"/>
+    </changeSet>
+
+    <changeSet id="0000002" author="dergey@gmail.com" context="test">
+        <createTable tableName="date_time_wrapper">
+            <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pk_date_time_wrapper"/>
+            </column>
+            <column name="instant" type="timestamp"/>
+            <column name="local_date_time" type="timestamp"/>
+            <column name="offset_date_time" type="timestamp"/>
+            <column name="zoned_date_time" type="timestamp"/>
+            <column name="local_time" type="time"/>
+            <column name="offset_time" type="time"/>
+            <column name="local_date" type="date"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0000003" author="dergey@gmail.com">
+        <createTable tableName="region">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData
+            file="config/liquibase/data/region.csv"
+            separator=";"
+            tableName="region">
+            <column name="id" type="numeric"/>
+            <column name="region_name" type="string"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet id="0000004" author="dergey@gmail.com">
+        <createTable tableName="country">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="country_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_country_region_id"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="region_id"
+                                 baseTableName="country"
+                                 constraintName="fk_country_region_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="region"/>
+    </changeSet>
+
+    <changeSet id="0000005" author="dergey@gmail.com">
+        <createTable tableName="location">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="city" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state_province" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_location_country_id"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="location"
+                                 constraintName="fk_location_country_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"/>
+    </changeSet>
+
+    <changeSet id="0000006" author="dergey@gmail.com">
+        <createTable tableName="salon">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_salon_location_id"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="location_id"
+                                 baseTableName="salon"
+                                 constraintName="fk_salon_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="location"/>
+    </changeSet>
+
+    <changeSet id="0000007" author="dergey@gmail.com">
+        <createTable tableName="employee">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hire_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="commission_pct" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manager_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="salon_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="manager_id"
+                                 baseTableName="employee"
+                                 constraintName="fk_employee_manager_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="salon_id"
+                                 baseTableName="employee"
+                                 constraintName="fk_employee_salon_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="salon"/>
+    </changeSet>
+
+    <changeSet id="0000008" author="dergey@gmail.com">
+        <createTable tableName="client">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="phone_number" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sex" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0000009" author="dergey@gmail.com">
+        <createTable tableName="service">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sex" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
+            <column name="price" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0000010" author="dergey@gmail.com">
+        <createTable tableName="orders">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="client_id"
+                                 baseTableName="orders"
+                                 constraintName="fk_orders_client_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="client"/>
+    </changeSet>
+
+    <changeSet id="0000011" author="dergey@gmail.com">
+        <createTable tableName="service_provided">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="start_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="end_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="note" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="service_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="service_provided"
+                                 constraintName="fk_service_provided_order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="orders"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="service_provided"
+                                 constraintName="fk_service_provided_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="service_id"
+                                 baseTableName="service_provided"
+                                 constraintName="fk_service_provided_service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service"/>
+    </changeSet>
+
+    <changeSet id="0000012" author="dergey@gmail.com">
+        <createTable tableName="material">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="unit" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="price" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0000013" author="dergey@gmail.com">
+        <createTable tableName="material_in_salon">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="count" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="material_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="salon_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="material_in_salon"
+                                 constraintName="fk_material_in_salon_material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="material"/>
+
+        <addForeignKeyConstraint baseColumnNames="salon_id"
+                                 baseTableName="material_in_salon"
+                                 constraintName="fk_material_in_salon_salon_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="salon"/>
+    </changeSet>
+
+    <changeSet id="0000014" author="dergey@gmail.com">
+        <createTable tableName="used_material">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="count" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="decommission" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="material_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="used_material"
+                                 constraintName="fk_used_material_orders_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="orders"/>
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="used_material"
+                                 constraintName="fk_used_material_material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="material"/>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="used_material"
+                                 constraintName="fk_used_material_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+
+    <changeSet id="0000015" author="dergey@gmail.com">
+        <createTable tableName="specialization">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="note" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="service_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="specialization"
+                                 constraintName="fk_specialization_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="service_id"
+                                 baseTableName="specialization"
+                                 constraintName="fk_specialization_service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service"/>
+    </changeSet>
+</databaseChangeLog>
