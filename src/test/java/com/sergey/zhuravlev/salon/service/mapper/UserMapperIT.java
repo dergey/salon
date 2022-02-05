@@ -2,7 +2,8 @@ package com.sergey.zhuravlev.salon.service.mapper;
 
 import com.sergey.zhuravlev.salon.SalonApp;
 import com.sergey.zhuravlev.salon.domain.User;
-import com.sergey.zhuravlev.salon.service.dto.UserDTO;
+import com.sergey.zhuravlev.salon.dto.UserDto;
+import com.sergey.zhuravlev.salon.mapper.UserMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ public class UserMapperIT {
     private UserMapper userMapper;
 
     private User user;
-    private UserDTO userDto;
+    private UserDto userDto;
 
     @BeforeEach
     public void init() {
@@ -40,7 +41,7 @@ public class UserMapperIT {
         user.setEmail("johndoe@localhost");
         user.setLangKey("en");
 
-        userDto = new UserDTO(user);
+        userDto = new UserDto(user);
     }
 
     @Test
@@ -49,15 +50,15 @@ public class UserMapperIT {
         users.add(user);
         users.add(null);
 
-        List<UserDTO> userDTOS = userMapper.usersToUserDTOs(users);
+        List<UserDto> userDtos = userMapper.usersToUserDTOs(users);
 
-        assertThat(userDTOS).isNotEmpty();
-        assertThat(userDTOS).size().isEqualTo(1);
+        assertThat(userDtos).isNotEmpty();
+        assertThat(userDtos).size().isEqualTo(1);
     }
 
     @Test
     public void userDTOsToUsersShouldMapOnlyNonNullUsers() {
-        List<UserDTO> usersDto = new ArrayList<>();
+        List<UserDto> usersDto = new ArrayList<>();
         usersDto.add(userDto);
         usersDto.add(null);
 
@@ -73,7 +74,7 @@ public class UserMapperIT {
         authoritiesAsString.add("ADMIN");
         userDto.setAuthorities(authoritiesAsString);
 
-        List<UserDTO> usersDto = new ArrayList<>();
+        List<UserDto> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
         List<User> users = userMapper.userDTOsToUsers(usersDto);
@@ -89,7 +90,7 @@ public class UserMapperIT {
     public void userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
-        List<UserDTO> usersDto = new ArrayList<>();
+        List<UserDto> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
         List<User> users = userMapper.userDTOsToUsers(usersDto);

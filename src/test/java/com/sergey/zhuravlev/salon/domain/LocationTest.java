@@ -1,8 +1,9 @@
 package com.sergey.zhuravlev.salon.domain;
 
+import com.sergey.zhuravlev.salon.controller.TestUtil;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import com.sergey.zhuravlev.salon.web.rest.TestUtil;
 
 public class LocationTest {
 

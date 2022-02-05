@@ -1,46 +1,58 @@
 package com.sergey.zhuravlev.salon.service;
 
+import com.sergey.zhuravlev.salon.domain.Material;
 import com.sergey.zhuravlev.salon.domain.MaterialInSalon;
-
+import com.sergey.zhuravlev.salon.domain.Salon;
+import com.sergey.zhuravlev.salon.repository.MaterialInSalonRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-/**
- * Service Interface for managing {@link MaterialInSalon}.
- */
-public interface MaterialInSalonService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class MaterialInSalonService {
 
-    /**
-     * Save a materialInSalon.
-     *
-     * @param materialInSalon the entity to save.
-     * @return the persisted entity.
-     */
-    MaterialInSalon save(MaterialInSalon materialInSalon);
+    private final MaterialInSalonRepository materialInSalonRepository;
 
-    /**
-     * Get all the materialInSalons.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    Page<MaterialInSalon> findAll(Pageable pageable);
+    @Transactional
+    public MaterialInSalon create(Integer count, Material material, Salon salon) {
+        MaterialInSalon materialInSalon = new MaterialInSalon(null, count, material, salon);
+        log.debug("Request to save MaterialInSalon : {}", materialInSalon);
+        return materialInSalonRepository.save(materialInSalon);
+    }
+    @Transactional
+    public MaterialInSalon update(Long id, Integer count, Material material, Salon salon) {
+        MaterialInSalon materialInSalon = materialInSalonRepository.findById(id)
+            .orElseThrow(() -> new ObjectNotFoundException(id, "MaterialInSalon"));
+        materialInSalon.setCount(count);
+        materialInSalon.setMaterial(material);
+        materialInSalon.setSalon(salon);
+        log.debug("Request to save MaterialInSalon : {}", materialInSalon);
+        return materialInSalonRepository.save(materialInSalon);
+    }
 
+    @Transactional(readOnly = true)
+    public Page<MaterialInSalon> findAll(Pageable pageable) {
+        log.debug("Request to get all MaterialInSalons");
+        return materialInSalonRepository.findAll(pageable);
+    }
 
-    /**
-     * Get the "id" materialInSalon.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    Optional<MaterialInSalon> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Optional<MaterialInSalon> findOne(Long id) {
+        log.debug("Request to get MaterialInSalon : {}", id);
+        return materialInSalonRepository.findById(id);
+    }
 
-    /**
-     * Delete the "id" materialInSalon.
-     *
-     * @param id the id of the entity.
-     */
-    void delete(Long id);
+    @Transactional
+    public void delete(Long id) {
+        log.debug("Request to delete MaterialInSalon : {}", id);
+        materialInSalonRepository.deleteById(id);
+    }
 }

@@ -1,46 +1,59 @@
 package com.sergey.zhuravlev.salon.service;
 
 import com.sergey.zhuravlev.salon.domain.Client;
-
+import com.sergey.zhuravlev.salon.domain.enumeration.Sex;
+import com.sergey.zhuravlev.salon.repository.ClientRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-/**
- * Service Interface for managing {@link Client}.
- */
-public interface ClientService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ClientService {
 
-    /**
-     * Save a client.
-     *
-     * @param client the entity to save.
-     * @return the persisted entity.
-     */
-    Client save(Client client);
+    private final ClientRepository clientRepository;
 
-    /**
-     * Get all the clients.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    Page<Client> findAll(Pageable pageable);
+    @Transactional
+    public Client create(String firstName, String lastName, String email, String phoneNumber, Sex sex) {
+        Client client = new Client(null, firstName, lastName, email, phoneNumber, sex);
+        log.debug("Request to create Client : {}", client);
+        return clientRepository.save(client);
+    }
 
+    @Transactional
+    public Client update(Long id, String firstName, String lastName, String email, String phoneNumber, Sex sex) {
+        Client client = clientRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Client"));
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setEmail(email);
+        client.setPhoneNumber(phoneNumber);
+        client.setSex(sex);
+        log.debug("Request to update Client : {}", client);
+        return client;
+    }
 
-    /**
-     * Get the "id" client.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    Optional<Client> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Page<Client> findAll(Pageable pageable) {
+        log.debug("Request to get all Clients");
+        return clientRepository.findAll(pageable);
+    }
 
-    /**
-     * Delete the "id" client.
-     *
-     * @param id the id of the entity.
-     */
-    void delete(Long id);
+    @Transactional(readOnly = true)
+    public Optional<Client> findOne(Long id) {
+        log.debug("Request to get Client : {}", id);
+        return clientRepository.findById(id);
+    }
+
+   @Transactional
+    public void delete(Long id) {
+        log.debug("Request to delete Client : {}", id);
+        clientRepository.deleteById(id);
+    }
 }

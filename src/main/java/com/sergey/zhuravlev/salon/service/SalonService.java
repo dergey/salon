@@ -1,46 +1,56 @@
 package com.sergey.zhuravlev.salon.service;
 
+import com.sergey.zhuravlev.salon.domain.Location;
 import com.sergey.zhuravlev.salon.domain.Salon;
-
+import com.sergey.zhuravlev.salon.repository.SalonRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-/**
- * Service Interface for managing {@link Salon}.
- */
-public interface SalonService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class SalonService {
 
-    /**
-     * Save a salon.
-     *
-     * @param salon the entity to save.
-     * @return the persisted entity.
-     */
-    Salon save(Salon salon);
+    private final SalonRepository salonRepository;
 
-    /**
-     * Get all the salons.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    Page<Salon> findAll(Pageable pageable);
+    @Transactional
+    public Salon create(String title, Location location) {
+        Salon salon = new Salon(null, title, location);
+        log.debug("Request to create Salon : {}", salon);
+        return salonRepository.save(salon);
+    }
 
+    @Transactional
+    public Salon update(Long id, String title, Location location) {
+        Salon salon = salonRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Salon"));
+        salon.setTitle(title);
+        salon.setLocation(location);
+        log.debug("Request to update Salon : {}", salon);
+        return salon;
+    }
 
-    /**
-     * Get the "id" salon.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    Optional<Salon> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Page<Salon> findAll(Pageable pageable) {
+        log.debug("Request to get all Salons");
+        return salonRepository.findAll(pageable);
+    }
 
-    /**
-     * Delete the "id" salon.
-     *
-     * @param id the id of the entity.
-     */
-    void delete(Long id);
+    @Transactional(readOnly = true)
+    public Optional<Salon> findOne(Long id) {
+        log.debug("Request to get Salon : {}", id);
+        return salonRepository.findById(id);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        log.debug("Request to delete Salon : {}", id);
+        salonRepository.deleteById(id);
+    }
 }

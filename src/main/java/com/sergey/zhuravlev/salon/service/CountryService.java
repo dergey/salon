@@ -1,43 +1,51 @@
 package com.sergey.zhuravlev.salon.service;
 
 import com.sergey.zhuravlev.salon.domain.Country;
+import com.sergey.zhuravlev.salon.domain.Region;
+import com.sergey.zhuravlev.salon.repository.CountryRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ObjectNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Service Interface for managing {@link Country}.
- */
-public interface CountryService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class CountryService {
 
-    /**
-     * Save a country.
-     *
-     * @param country the entity to save.
-     * @return the persisted entity.
-     */
-    Country save(Country country);
+    private final CountryRepository countryRepository;
 
-    /**
-     * Get all the countries.
-     *
-     * @return the list of entities.
-     */
-    List<Country> findAll();
+    @Transactional
+    public Country create(String code, String name, Region region) {
+        return countryRepository.save(new Country(code, name, region));
+    }
+
+    @Transactional
+    public Country update(String code, String name, Region region) {
+        Country country = countryRepository.findByCode(code).orElseThrow(() -> new ObjectNotFoundException(code, "Country"));
+        country.setName(name);
+        country.setRegion(region);
+        return countryRepository.save(country);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Country> findAll() {
+        return countryRepository.findAll();
+    }
 
 
-    /**
-     * Get the "id" country.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    Optional<Country> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Optional<Country> findOne(String code) {
+        return countryRepository.findByCode(code);
+    }
 
-    /**
-     * Delete the "id" country.
-     *
-     * @param id the id of the entity.
-     */
-    void delete(Long id);
+    @Transactional
+    public void delete(String code) {
+        countryRepository.deleteByCode(code);
+    }
+
 }

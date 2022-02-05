@@ -1,46 +1,58 @@
 package com.sergey.zhuravlev.salon.service;
 
 import com.sergey.zhuravlev.salon.domain.Material;
-
+import com.sergey.zhuravlev.salon.domain.enumeration.Unit;
+import com.sergey.zhuravlev.salon.repository.MaterialRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
-/**
- * Service Interface for managing {@link Material}.
- */
-public interface MaterialService {
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class MaterialService {
 
-    /**
-     * Save a material.
-     *
-     * @param material the entity to save.
-     * @return the persisted entity.
-     */
-    Material save(Material material);
+    private final MaterialRepository materialRepository;
 
-    /**
-     * Get all the materials.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    Page<Material> findAll(Pageable pageable);
+    @Transactional
+    public Material create(String title, Unit unit, BigDecimal price) {
+        Material material = new Material(null, title, unit, price);
+        log.debug("Request to save Material : {}", material);
+        return materialRepository.save(material);
+    }
 
+    @Transactional
+    public Material update(Long id, String title, Unit unit, BigDecimal price) {
+        Material material = materialRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Material"));
+        material.setTitle(title);
+        material.setUnit(unit);
+        material.setPrice(price);
+        log.debug("Request to save Material : {}", material);
+        return materialRepository.save(material);
+    }
 
-    /**
-     * Get the "id" material.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    Optional<Material> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Page<Material> findAll(Pageable pageable) {
+        log.debug("Request to get all Materials");
+        return materialRepository.findAll(pageable);
+    }
 
-    /**
-     * Delete the "id" material.
-     *
-     * @param id the id of the entity.
-     */
-    void delete(Long id);
+    @Transactional(readOnly = true)
+    public Optional<Material> findOne(Long id) {
+        log.debug("Request to get Material : {}", id);
+        return materialRepository.findById(id);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        log.debug("Request to delete Material : {}", id);
+        materialRepository.deleteById(id);
+    }
 }

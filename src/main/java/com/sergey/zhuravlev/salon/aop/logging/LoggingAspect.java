@@ -1,30 +1,25 @@
 package com.sergey.zhuravlev.salon.aop.logging;
 
 import io.github.jhipster.config.JHipsterConstants;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 
 import java.util.Arrays;
 
+@Slf4j
 @Aspect
+@RequiredArgsConstructor
 public class LoggingAspect {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-
     private final Environment env;
-
-    public LoggingAspect(Environment env) {
-        this.env = env;
-    }
 
     @Pointcut("within(@org.springframework.stereotype.Repository *)" +
         " || within(@org.springframework.stereotype.Service *)" +
@@ -35,7 +30,7 @@ public class LoggingAspect {
 
     @Pointcut("within(com.sergey.zhuravlev.salon.repository..*)"+
         " || within(com.sergey.zhuravlev.salon.service..*)"+
-        " || within(com.sergey.zhuravlev.salon.web.rest..*)")
+        " || within(com.sergey.zhuravlev.salon.controller..*)")
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }

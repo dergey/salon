@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <property name="autoIncrement" value="true"/>
 
@@ -167,10 +165,10 @@
 
     <changeSet id="0000004" author="dergey@gmail.com">
         <createTable tableName="country">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="code" type="varchar(2)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="country_name" type="varchar(255)">
+            <column name="name" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
             <column name="region_id" type="bigint">
@@ -202,15 +200,15 @@
             <column name="state_province" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="country_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_location_country_id"/>
+            <column name="country_code" type="varchar(2)">
+                <constraints nullable="true"/>
             </column>
         </createTable>
 
-        <addForeignKeyConstraint baseColumnNames="country_id"
+        <addForeignKeyConstraint baseColumnNames="country_code"
                                  baseTableName="location"
-                                 constraintName="fk_location_country_id"
-                                 referencedColumnNames="id"
+                                 constraintName="fk_location_country_code"
+                                 referencedColumnNames="code"
                                  referencedTableName="country"/>
     </changeSet>
 
