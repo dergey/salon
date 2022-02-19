@@ -149,7 +149,7 @@
             <column name="status" type="varchar(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="region_name" type="varchar(255)">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -159,7 +159,7 @@
             separator=";"
             tableName="region">
             <column name="id" type="numeric"/>
-            <column name="region_name" type="string"/>
+            <column name="name" type="string"/>
         </loadData>
     </changeSet>
 
@@ -172,7 +172,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="region_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_country_region_id"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
 

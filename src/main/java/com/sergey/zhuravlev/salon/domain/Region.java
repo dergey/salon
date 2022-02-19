@@ -19,7 +19,7 @@ public class Region implements Serializable {
     @Column(name = "status", length = 20, nullable = false)
     private RegionStatus status;
 
-    @Column(name = "region_name", nullable = false)
-    private String regionName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
 }

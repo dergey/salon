@@ -21,6 +21,6 @@ public class RegionDto {
     private RegionStatus status;
 
     @NotNull
-    private String regionName;
+    private String name;
 
 }

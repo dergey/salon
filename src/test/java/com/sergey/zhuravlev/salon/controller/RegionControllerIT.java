@@ -82,7 +82,7 @@ public class RegionControllerIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(region.getId().intValue())))
-            .andExpect(jsonPath("$.[*].regionName").value(hasItem(DEFAULT_REGION_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_REGION_NAME)));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class RegionControllerIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(region.getId().intValue()))
-            .andExpect(jsonPath("$.regionName").value(DEFAULT_REGION_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_REGION_NAME));
     }
 
     @Test
