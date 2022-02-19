@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { ICrudGetAllAction, getSortState, IPaginationBaseState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Button, Row, Table } from 'reactstrap';
+import { getSortState, IPaginationBaseState, JhiItemCount, JhiPagination } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -83,7 +83,7 @@ export class Salon extends React.Component<ISalonProps, ISalonState> {
                     <td>{salon.title}</td>
                     <td>{salon.location ?
                       <Link to={`location/${salon.location.id}`}>
-                        {salon.location.country.countryName + ', ' + salon.location.city + ', ' + salon.location.address}
+                        {salon.location.country.name + ', ' + salon.location.city + ', ' + salon.location.address}
                       </Link> : ''}
                     </td>
                     <td className="text-right">

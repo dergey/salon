@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { ISalon, defaultValue } from 'app/shared/model/salon.model';
+import { defaultValue, ISalon, ISalonRequest } from 'app/shared/model/salon.model';
+import { ICrudPutIdAction } from 'app/shared/reducers/action.type';
 
 export const ACTION_TYPES = {
   FETCH_SALON_LIST: 'salon/FETCH_SALON_LIST',
@@ -126,10 +127,11 @@ export const createEntity: ICrudPutAction<ISalon> = entity => async dispatch => 
   return result;
 };
 
-export const updateEntity: ICrudPutAction<ISalon> = entity => async dispatch => {
+export const updateEntity: ICrudPutIdAction<ISalonRequest, ISalon> = (id, entity) => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_SALON,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(requestUrl, cleanEntity(entity))
   });
   dispatch(getEntities());
   return result;

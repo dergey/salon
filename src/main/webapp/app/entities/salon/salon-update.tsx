@@ -1,18 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Button, Col, Label, Row } from 'reactstrap';
+import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ILocation } from 'app/shared/model/location.model';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './salon.reducer';
-import { ISalon } from 'app/shared/model/salon.model';
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { createEntity, getEntity, reset, updateEntity } from './salon.reducer';
+import { ISalon, ISalonRequest } from 'app/shared/model/salon.model';
 
 export interface ISalonUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -48,22 +44,28 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { salonEntity } = this.props;
+      const id  = this.props.match.params.id;
       const entity = {
-        ...salonEntity,
         ...values
       };
 
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {
-        this.props.updateEntity(entity);
+        this.props.updateEntity(id, entity);
       }
     }
   };
 
   handleClose = () => {
     this.props.history.push('/salon');
+  };
+
+  toRequestEntity = (entity: ISalon) => {
+    return {
+      title: entity.title,
+      locationId: entity.location.id
+    } as ISalonRequest;
   };
 
   render() {
@@ -82,13 +84,7 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <AvForm model={isNew ? {} : salonEntity} onSubmit={this.saveEntity}>
-                {!isNew ? (
-                  <AvGroup>
-                    <Label for="salon-id">Номер</Label>
-                    <AvInput id="salon-id" type="text" className="form-control" name="id" required readOnly />
-                  </AvGroup>
-                ) : null}
+              <AvForm model={isNew ? {} : this.toRequestEntity(salonEntity)} onSubmit={this.saveEntity}>
                 <AvGroup>
                   <Label id="titleLabel" for="salon-title">
                     Название
@@ -104,12 +100,12 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
                 </AvGroup>
                 <AvGroup>
                   <Label for="salon-location">Адрес</Label>
-                  <AvInput id="salon-location" type="select" className="form-control" name="location.id">
+                  <AvInput id="salon-location" type="select" className="form-control" name="locationId">
                     <option value="" key="0" />
                     {locations
                       ? locations.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.country.countryName + ', ' + otherEntity.city + ', ' + otherEntity.address}
+                            {otherEntity.country.name + ', ' + otherEntity.city + ', ' + otherEntity.address}
                           </option>
                         ))
                       : null}

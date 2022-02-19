@@ -6,4 +6,9 @@ export interface ISalon {
   location?: ILocation;
 }
 
-export const defaultValue: Readonly<ISalon> = {};
+export interface ISalonRequest {
+  title?: string;
+  locationId?: number;
+}
+
+export const defaultValue: Readonly<ISalon> = { location: {} };
