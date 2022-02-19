@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { ILocation, defaultValue } from 'app/shared/model/location.model';
+import { defaultValue, ILocation, ILocationRequest } from 'app/shared/model/location.model';
+import { ICrudPutIdAction } from 'app/shared/reducers/action.type';
 
 export const ACTION_TYPES = {
   FETCH_LOCATION_LIST: 'location/FETCH_LOCATION_LIST',
@@ -117,7 +118,7 @@ export const getEntity: ICrudGetAction<ILocation> = id => {
   };
 };
 
-export const createEntity: ICrudPutAction<ILocation> = entity => async dispatch => {
+export const createEntity: ICrudPutAction<ILocationRequest> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_LOCATION,
     payload: axios.post(apiUrl, cleanEntity(entity))
@@ -126,10 +127,11 @@ export const createEntity: ICrudPutAction<ILocation> = entity => async dispatch 
   return result;
 };
 
-export const updateEntity: ICrudPutAction<ILocation> = entity => async dispatch => {
+export const updateEntity: ICrudPutIdAction<ILocationRequest, ILocation> = (id, entity) => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_LOCATION,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(requestUrl, cleanEntity(entity))
   });
   dispatch(getEntities());
   return result;

@@ -9,4 +9,12 @@ export interface ILocation {
   country?: ICountry;
 }
 
-export const defaultValue: Readonly<ILocation> = {};
+export interface ILocationRequest {
+  address?: string;
+  postalCode?: string;
+  city?: string;
+  stateProvince?: string;
+  countryCode?: string;
+}
+
+export const defaultValue: Readonly<ILocation> = { country: {} };

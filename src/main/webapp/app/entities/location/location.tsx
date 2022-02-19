@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { ICrudGetAllAction, getSortState, IPaginationBaseState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Button, Row, Table } from 'reactstrap';
+import { getSortState, IPaginationBaseState, JhiItemCount, JhiPagination } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './location.reducer';
-import { ILocation } from 'app/shared/model/location.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface ILocationProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -95,7 +93,7 @@ export class Location extends React.Component<ILocationProps, ILocationState> {
                     <td>{location.postalCode}</td>
                     <td>{location.city}</td>
                     <td>{location.stateProvince}</td>
-                    <td>{location.country ? <Link to={`country/${location.country.id}`}>{location.country.countryName}</Link> : ''}</td>
+                    <td>{location.country ? <Link to={`country/${location.country.code}`}>{location.country.name}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${location.id}`} color="info" size="sm">

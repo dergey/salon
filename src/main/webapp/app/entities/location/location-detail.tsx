@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { ICrudGetAction } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './location.reducer';
-import { ILocation } from 'app/shared/model/location.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface ILocationDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -43,7 +40,7 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
             </dt>
             <dd>{locationEntity.stateProvince}</dd>
             <dt>Страна</dt>
-            <dd>{locationEntity.country ? locationEntity.country.countryName : ''}</dd>
+            <dd>{locationEntity.country ? locationEntity.country.name : ''}</dd>
           </dl>
           <Button tag={Link} to="/location" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Назад</span>

@@ -1,18 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Button, Col, Label, Row } from 'reactstrap';
+import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
-
-import { ICountry } from 'app/shared/model/country.model';
 import { getEntities as getCountries } from 'app/entities/country/country.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './location.reducer';
-import { ILocation } from 'app/shared/model/location.model';
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { createEntity, getEntity, reset, updateEntity } from './location.reducer';
+import { ILocation, ILocationRequest } from 'app/shared/model/location.model';
 
 export interface ILocationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -49,21 +44,30 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const { locationEntity } = this.props;
-      const entity = {
-        ...locationEntity,
+      const requestEntity = {
         ...values
       };
 
       if (this.state.isNew) {
-        this.props.createEntity(entity);
+        this.props.createEntity(requestEntity);
       } else {
-        this.props.updateEntity(entity);
+        this.props.updateEntity(locationEntity.id, requestEntity);
       }
     }
   };
 
   handleClose = () => {
     this.props.history.push('/location');
+  };
+
+  toRequestEntity = (entity: ILocation) => {
+    return {
+      address: entity.address,
+      postalCode: entity.postalCode,
+      city: entity.city,
+      stateProvince: entity.stateProvince,
+      countryCode: entity.country.code
+    } as ILocationRequest;
   };
 
   render() {
@@ -82,13 +86,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <AvForm model={isNew ? {} : locationEntity} onSubmit={this.saveEntity}>
-                {!isNew ? (
-                  <AvGroup>
-                    <Label for="location-id">ID</Label>
-                    <AvInput id="location-id" type="text" className="form-control" name="id" required readOnly />
-                  </AvGroup>
-                ) : null}
+              <AvForm model={isNew ? {} : this.toRequestEntity(locationEntity)} onSubmit={this.saveEntity}>
                 <AvGroup>
                   <Label id="addressLabel" for="location-address">
                     Адрес
@@ -123,18 +121,18 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                 </AvGroup>
                 <AvGroup>
                   <Label id="stateProvinceLabel" for="location-stateProvince">
-                    Область Штат
+                    Область
                   </Label>
                   <AvField id="location-stateProvince" type="text" name="stateProvince" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="location-country">Страна</Label>
-                  <AvInput id="location-country" type="select" className="form-control" name="country.id">
+                  <AvInput id="location-country" type="select" className="form-control" name="countryCode">
                     <option value="" key="0" />
                     {countries
                       ? countries.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.countryName}
+                          <option value={otherEntity.code} key={otherEntity.code}>
+                            {otherEntity.name}
                           </option>
                         ))
                       : null}
