@@ -1,18 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Button, Col, Label, Row } from 'reactstrap';
+import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
-
-import { IRegion } from 'app/shared/model/region.model';
 import { getEntities as getRegions } from 'app/entities/region/region.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './country.reducer';
-import { ICountry } from 'app/shared/model/country.model';
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { createEntity, getEntity, reset, updateEntity } from './country.reducer';
+import { ICountry, ICountryRequest } from 'app/shared/model/country.model';
 
 export interface ICountryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -48,22 +43,26 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { countryEntity } = this.props;
       const entity = {
-        ...countryEntity,
         ...values
       };
-
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {
-        this.props.updateEntity(entity);
+        this.props.updateEntity(entity.code, this.toRequest(entity));
       }
     }
   };
 
   handleClose = () => {
     this.props.history.push('/country');
+  };
+
+  toRequest = (entity: Readonly<ICountry>) => {
+    return {
+      name: entity.name,
+      regionId: entity.region.id
+    } as ICountryRequest;
   };
 
   render() {
@@ -82,21 +81,30 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <AvForm model={isNew ? {} : countryEntity} onSubmit={this.saveEntity}>
-                {!isNew ? (
-                  <AvGroup>
-                    <Label for="country-id">Номер</Label>
-                    <AvInput id="country-id" type="text" className="form-control" name="id" required readOnly />
-                  </AvGroup>
-                ) : null}
+              <AvForm model={ isNew ? {} : countryEntity } onSubmit={this.saveEntity}>
                 <AvGroup>
-                  <Label id="countryNameLabel" for="country-countryName">
+                  <Label id="countryCodeLabel" for="country-code">
+                    Код страны
+                  </Label>
+                  <AvField
+                    id="country-code"
+                    type="text"
+                    name="code"
+                    validate={{
+                      required: { value: true, errorMessage: 'Это поле не может быть пустым.' },
+                      minLength: { value: 2, errorMessage: 'Код страны может содержать только 2 символа.' }
+                    }}
+                    disabled={!isNew}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="countryNameLabel" for="country-name">
                     Название страны
                   </Label>
                   <AvField
-                    id="country-countryName"
+                    id="country-name"
                     type="text"
-                    name="countryName"
+                    name="name"
                     validate={{
                       required: { value: true, errorMessage: 'Это поле не может быть пустым.' }
                     }}
@@ -109,7 +117,7 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
                     {regions
                       ? regions.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.regionName}
+                            {otherEntity.name}
                           </option>
                         ))
                       : null}

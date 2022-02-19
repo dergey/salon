@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { ICountry, defaultValue } from 'app/shared/model/country.model';
+import { defaultValue, ICountry, ICountryRequest } from 'app/shared/model/country.model';
+import { ICrudPutIdAction } from 'app/shared/reducers/action.type';
 
 export const ACTION_TYPES = {
   FETCH_COUNTRY_LIST: 'country/FETCH_COUNTRY_LIST',
@@ -121,10 +122,11 @@ export const createEntity: ICrudPutAction<ICountry> = entity => async dispatch =
   return result;
 };
 
-export const updateEntity: ICrudPutAction<ICountry> = entity => async dispatch => {
+export const updateEntity: ICrudPutIdAction<ICountryRequest, ICountry> = (code, requestEntity) => async dispatch => {
+  const requestUrl = `${apiUrl}/${code}`;
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_COUNTRY,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(requestUrl, cleanEntity(requestEntity))
   });
   dispatch(getEntities());
   return result;

@@ -1,9 +1,20 @@
 import { IRegion } from 'app/shared/model/region.model';
 
 export interface ICountry {
-  id?: number;
-  countryName?: string;
+  code?: string;
+  name?: string;
   region?: IRegion;
 }
 
-export const defaultValue: Readonly<ICountry> = {};
+export interface ICountryRequest {
+  name?: string;
+  regionId?: number;
+}
+
+export interface ICountryModel {
+  code?: string;
+  name?: string;
+  regionId?: number;
+}
+
+export const defaultValue: Readonly<ICountry> = { region: {} };

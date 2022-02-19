@@ -1,13 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { ICountry } from 'app/shared/model/country.model';
 import { IRootState } from 'app/shared/reducers';
-import { getEntity, deleteEntity } from './country.reducer';
+import { deleteEntity, getEntity } from './country.reducer';
 
 export interface ICountryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -17,7 +14,7 @@ export class CountryDeleteDialog extends React.Component<ICountryDeleteDialogPro
   }
 
   confirmDelete = event => {
-    this.props.deleteEntity(this.props.countryEntity.id);
+    this.props.deleteEntity(this.props.countryEntity.code);
     this.handleClose(event);
   };
 
@@ -31,7 +28,7 @@ export class CountryDeleteDialog extends React.Component<ICountryDeleteDialogPro
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Подтвердите удаление</ModalHeader>
-        <ModalBody id="salonApp.country.delete.question">Вы уверены, что хотите удалить {countryEntity.countryName}?</ModalBody>
+        <ModalBody id="salonApp.country.delete.question">Вы уверены, что хотите удалить {countryEntity.name}?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />
