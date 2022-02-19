@@ -1,11 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {RouteComponentProps} from 'react-router-dom';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {changeStatusEntity, getEntity} from './region.reducer';
-import {RegionStatus} from "app/shared/model/enumerations/region-status.model";
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+import { changeStatusEntity, getEntity } from './region.reducer';
+import { RegionStatus } from "app/shared/model/enumerations/region-status.model";
 
 export interface IRegionStatusDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -31,7 +31,7 @@ export class RegionStatusDialog extends React.Component<IRegionStatusDialogProps
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Подтвердите {actionHeader}</ModalHeader>
-        <ModalBody id="salonApp.region.changeStatus.question">Вы уверены, что хотите {action.toLowerCase()} этот регион {regionEntity.regionName}?</ModalBody>
+        <ModalBody id="salonApp.region.changeStatus.question">Вы уверены, что хотите {action.toLowerCase()} этот регион {regionEntity.name}?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />

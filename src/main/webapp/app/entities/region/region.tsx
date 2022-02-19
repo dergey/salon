@@ -43,7 +43,7 @@ export class Region extends React.Component<IRegionProps> {
                         {region.id}
                       </Button>
                     </td>
-                    <td>{region.regionName}</td>
+                    <td>{region.name}</td>
                     <td>{region.status === RegionStatus.ACTIVATED ? 'Активирован' : 'Деактивирован'}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">

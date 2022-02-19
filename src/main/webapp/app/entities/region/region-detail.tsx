@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -29,7 +29,7 @@ export class RegionDetail extends React.Component<IRegionDetailProps> {
             <dt>
               <span id="regionName">Название региона</span>
             </dt>
-            <dd>{regionEntity.regionName}</dd>
+            <dd>{regionEntity.name}</dd>
           </dl>
           <dl className="jh-entity-details">
             <dt>
