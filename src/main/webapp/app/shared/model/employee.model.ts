@@ -15,4 +15,16 @@ export interface IEmployee {
   salon?: ISalon;
 }
 
-export const defaultValue: Readonly<IEmployee> = {};
+export interface IEmployeeRequest {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  hireDate?: Moment;
+  salary?: number;
+  commissionPct?: number;
+  managerId?: number;
+  salonId: number;
+}
+
+export const defaultValue: Readonly<IEmployee> = { manager: {}, salon: {} };

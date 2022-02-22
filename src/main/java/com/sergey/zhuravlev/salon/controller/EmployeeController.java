@@ -47,8 +47,11 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeRequestDto dto) throws URISyntaxException {
         log.debug("REST request to save Employee : {}", dto);
-        Employee manager = employeeService.findOne(dto.getManagerId())
-            .orElseThrow(() -> new BadRequestAlertException("Manager with given ID does not exist", ENTITY_NAME, "entitynotexist"));
+        Employee manager = null;
+        if (dto.getManagerId() != null) {
+            manager = employeeService.findOne(dto.getManagerId())
+                    .orElseThrow(() -> new BadRequestAlertException("Manager with given ID does not exist", ENTITY_NAME, "entitynotexist"));
+        }
         Salon salon = salonService.findOne(dto.getSalonId())
             .orElseThrow(() -> new BadRequestAlertException("Salon with given ID does not exist", "salon", "entitynotexist"));
         Employee result = employeeService.create(dto.getFirstName(),

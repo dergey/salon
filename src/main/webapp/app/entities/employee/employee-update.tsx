@@ -1,19 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Button, Col, Label, Row } from 'reactstrap';
+import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
-import { ISalon } from 'app/shared/model/salon.model';
 import { getEntities as getSalons } from 'app/entities/salon/salon.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './employee.reducer';
-import { IEmployee } from 'app/shared/model/employee.model';
+import { createEntity, getEntity, reset, updateEntity } from './employee.reducer';
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { IEmployee, IEmployeeRequest } from "app/shared/model/employee.model";
 
 export interface IEmployeeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -54,22 +51,35 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
     values.hireDate = convertDateTimeToServer(values.hireDate);
 
     if (errors.length === 0) {
-      const { employeeEntity } = this.props;
+      const id  = this.props.match.params.id;
       const entity = {
-        ...employeeEntity,
         ...values
       };
 
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {
-        this.props.updateEntity(entity);
+        this.props.updateEntity(id, entity);
       }
     }
   };
 
   handleClose = () => {
     this.props.history.push('/employee');
+  };
+
+  toRequest = (entity: Readonly<IEmployee>) => {
+    return {
+      firstName: entity.firstName,
+      lastName: entity.lastName,
+      email: entity.email,
+      phoneNumber: entity.phoneNumber,
+      hireDate: entity.hireDate,
+      salary: entity.salary,
+      commissionPct: entity.commissionPct,
+      managerId: entity.manager.id,
+      salonId: entity.salon.id
+    } as IEmployeeRequest;
   };
 
   render() {
@@ -88,7 +98,7 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
             {loading ? (
               <p>Загрузка...</p>
             ) : (
-              <AvForm model={isNew ? {} : employeeEntity} onSubmit={this.saveEntity}>
+              <AvForm model={isNew ? {} : this.toRequest(employeeEntity)} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
                     <Label for="employee-id">Номер</Label>
@@ -195,7 +205,7 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
                 </AvGroup>
                 <AvGroup>
                   <Label for="employee-manager">Менеджер</Label>
-                  <AvInput id="employee-manager" type="select" className="form-control" name="manager.id">
+                  <AvInput id="employee-manager" type="select" className="form-control" name="managerId">
                     <option value="" key="0" />
                     {employees
                       ? employees.map(otherEntity => (
@@ -208,7 +218,7 @@ export class EmployeeUpdate extends React.Component<IEmployeeUpdateProps, IEmplo
                 </AvGroup>
                 <AvGroup>
                   <Label for="employee-salon">Парикмахерская</Label>
-                  <AvInput id="employee-salon" type="select" className="form-control" name="salon.id">
+                  <AvInput id="employee-salon" type="select" className="form-control" name="salonId">
                     <option value="" key="0" />
                     {salons
                       ? salons.map(otherEntity => (

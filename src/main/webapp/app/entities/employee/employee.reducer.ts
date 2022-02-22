@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IEmployee, defaultValue } from 'app/shared/model/employee.model';
-import { IEmployeeSchedule, defaultScheduleValue } from 'app/shared/model/employee.schedule.model';
+import { defaultValue, IEmployee, IEmployeeRequest } from 'app/shared/model/employee.model';
+import { defaultScheduleValue, IEmployeeSchedule } from 'app/shared/model/employee.schedule.model';
+import { ICrudPutIdAction } from 'app/shared/reducers/action.type';
 
 export const ACTION_TYPES = {
   FETCH_EMPLOYEE_LIST: 'employee/FETCH_EMPLOYEE_LIST',
@@ -145,10 +146,11 @@ export const createEntity: ICrudPutAction<IEmployee> = entity => async dispatch 
   return result;
 };
 
-export const updateEntity: ICrudPutAction<IEmployee> = entity => async dispatch => {
+export const updateEntity: ICrudPutIdAction<IEmployeeRequest, IEmployee> = (id, entity) => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_EMPLOYEE,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(requestUrl, cleanEntity(entity))
   });
   dispatch(getEntities());
   return result;
