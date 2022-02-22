@@ -1,18 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { Button, Col, Label, Row } from 'reactstrap';
+import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { getEntity, updateEntity, createEntity, reset } from './service.reducer';
-import { IService } from 'app/shared/model/service.model';
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { createEntity, getEntity, reset, updateEntity } from './service.reducer';
+import { IService, IServiceRequest } from 'app/shared/model/service.model';
 
-export interface IServiceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IServiceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
+}
 
 export interface IServiceUpdateState {
   isNew: boolean;
@@ -42,22 +40,29 @@ export class ServiceUpdate extends React.Component<IServiceUpdateProps, IService
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { serviceEntity } = this.props;
+      const id = this.props.match.params.id;
       const entity = {
-        ...serviceEntity,
         ...values
       };
 
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {
-        this.props.updateEntity(entity);
+        this.props.updateEntity(id, entity);
       }
     }
   };
 
   handleClose = () => {
     this.props.history.push('/service');
+  };
+
+  toRequest = (entity: Readonly<IService>) => {
+    return {
+      title: entity.title,
+      sex: entity.sex,
+      price: entity.price
+    } as IServiceRequest;
   };
 
   render() {
@@ -76,13 +81,7 @@ export class ServiceUpdate extends React.Component<IServiceUpdateProps, IService
             {loading ? (
               <p>Загрузка...</p>
             ) : (
-              <AvForm model={isNew ? {} : serviceEntity} onSubmit={this.saveEntity}>
-                {!isNew ? (
-                  <AvGroup>
-                    <Label for="service-id">Номер</Label>
-                    <AvInput id="service-id" type="text" className="form-control" name="id" required readOnly />
-                  </AvGroup>
-                ) : null}
+              <AvForm model={isNew ? {} : this.toRequest(serviceEntity)} onSubmit={this.saveEntity}>
                 <AvGroup>
                   <Label id="titleLabel" for="service-title">
                     Название
@@ -100,7 +99,8 @@ export class ServiceUpdate extends React.Component<IServiceUpdateProps, IService
                   <Label id="sexLabel" for="service-client-sex">
                     Пол
                   </Label>
-                  <AvInput id="service-client-sex" type="select" className="form-control" name="sex" value={(!isNew && serviceEntity.sex) || 'MAN'}>
+                  <AvInput id="service-client-sex" type="select" className="form-control" name="sex"
+                           value={(!isNew && serviceEntity.sex) || 'MAN'}>
                     <option value="MAN">муж</option>
                     <option value="WOMAN">жен</option>
                   </AvInput>
@@ -121,13 +121,13 @@ export class ServiceUpdate extends React.Component<IServiceUpdateProps, IService
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/service" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />
+                  <FontAwesomeIcon icon="arrow-left"/>
                   &nbsp;
                   <span className="d-none d-md-inline">Назад</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />
+                  <FontAwesomeIcon icon="save"/>
                   &nbsp; Сохранить
                 </Button>
               </AvForm>

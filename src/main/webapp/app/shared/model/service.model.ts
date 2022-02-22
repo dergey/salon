@@ -7,4 +7,10 @@ export interface IService {
   price?: number;
 }
 
+export interface IServiceRequest {
+  title?: string;
+  sex?: Sex;
+  price?: number;
+}
+
 export const defaultValue: Readonly<IService> = {};
