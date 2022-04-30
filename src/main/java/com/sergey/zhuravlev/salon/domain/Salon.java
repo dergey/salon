@@ -22,7 +22,7 @@ public class Salon implements Serializable {
 
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", unique = true)
+    @JoinColumn(name = "location_id", nullable = false, unique = true)
     private Location location;
 
 }

@@ -1,5 +1,6 @@
 package com.sergey.zhuravlev.salon.service;
 
+import com.sergey.zhuravlev.salon.domain.Country;
 import com.sergey.zhuravlev.salon.domain.Location;
 import com.sergey.zhuravlev.salon.domain.Salon;
 import com.sergey.zhuravlev.salon.repository.SalonRepository;
@@ -21,17 +22,22 @@ public class SalonService {
     private final SalonRepository salonRepository;
 
     @Transactional
-    public Salon create(String title, Location location) {
-        Salon salon = new Salon(null, title, location);
+    public Salon create(String title, String address, String postalCode, String city, String stateProvince, Country country) {
+        Salon salon = new Salon(null, title, new Location(null, address, postalCode, city, stateProvince, country));
         log.debug("Request to create Salon : {}", salon);
         return salonRepository.save(salon);
     }
 
     @Transactional
-    public Salon update(Long id, String title, Location location) {
+    public Salon update(Long id, String title, String address, String postalCode, String city, String stateProvince,
+                        Country country) {
         Salon salon = salonRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "Salon"));
         salon.setTitle(title);
-        salon.setLocation(location);
+        salon.getLocation().setAddress(address);
+        salon.getLocation().setPostalCode(postalCode);
+        salon.getLocation().setCity(city);
+        salon.getLocation().setStateProvince(stateProvince);
+        salon.getLocation().setCountry(country);
         log.debug("Request to update Salon : {}", salon);
         return salon;
     }

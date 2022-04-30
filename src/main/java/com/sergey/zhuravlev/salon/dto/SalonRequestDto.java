@@ -16,6 +16,7 @@ public class SalonRequestDto {
     @NotNull
     private String title;
 
-    private Long locationId;
+    @NotNull
+    private LocationRequestDto location;
 
 }

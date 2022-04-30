@@ -1,12 +1,12 @@
 package com.sergey.zhuravlev.salon.controller;
 
-import com.sergey.zhuravlev.salon.domain.Location;
+import com.sergey.zhuravlev.salon.domain.Country;
 import com.sergey.zhuravlev.salon.domain.Salon;
 import com.sergey.zhuravlev.salon.dto.SalonDto;
 import com.sergey.zhuravlev.salon.dto.SalonRequestDto;
 import com.sergey.zhuravlev.salon.exception.BadRequestAlertException;
 import com.sergey.zhuravlev.salon.mapper.SalonMapper;
-import com.sergey.zhuravlev.salon.service.LocationService;
+import com.sergey.zhuravlev.salon.service.CountryService;
 import com.sergey.zhuravlev.salon.service.SalonService;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -39,16 +39,17 @@ public class SalonController {
     private String applicationName;
 
     private final SalonService salonService;
-    private final LocationService locationService;
+    private final CountryService countryService;
 
     private final SalonMapper salonMapper;
 
     @PostMapping
     public ResponseEntity<SalonDto> createSalon(@Valid @RequestBody SalonRequestDto dto) throws URISyntaxException {
         log.debug("REST request to save Salon : {}", dto);
-        Location location = locationService.findOne(dto.getLocationId())
-            .orElseThrow(() -> new BadRequestAlertException("Location with given ID does not exist", "location", "entitynotexist"));
-        Salon result = salonService.create(dto.getTitle(), location);
+        Country country = countryService.findOne(dto.getLocation().getCountryCode())
+                .orElseThrow(() -> new BadRequestAlertException("Country with given CODE does not exist", "country", "entitynotexist"));
+        Salon result = salonService.create(dto.getTitle(), dto.getLocation().getAddress(), dto.getLocation().getPostalCode(),
+                dto.getLocation().getCity(), dto.getLocation().getStateProvince(), country);
         return ResponseEntity.created(new URI("/api/salons/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(salonMapper.salonToSalonDto(result));
@@ -58,9 +59,10 @@ public class SalonController {
     public ResponseEntity<SalonDto> updateSalon(@PathVariable Long id,
                                                 @Valid @RequestBody SalonRequestDto dto) throws URISyntaxException {
         log.debug("REST request to update Salon : {}", dto);
-        Location location = locationService.findOne(dto.getLocationId())
-            .orElseThrow(() -> new BadRequestAlertException("Location with given ID does not exist", "location", "entitynotexist"));
-        Salon result = salonService.update(id, dto.getTitle(), location);
+        Country country = countryService.findOne(dto.getLocation().getCountryCode())
+                .orElseThrow(() -> new BadRequestAlertException("Country with given CODE does not exist", "country", "entitynotexist"));
+        Salon result = salonService.update(id, dto.getTitle(), dto.getLocation().getAddress(), dto.getLocation().getPostalCode(),
+                dto.getLocation().getCity(), dto.getLocation().getStateProvince(), country);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(salonMapper.salonToSalonDto(result));
