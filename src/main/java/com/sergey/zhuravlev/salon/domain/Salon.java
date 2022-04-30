@@ -21,7 +21,7 @@ public class Salon implements Serializable {
     private String title;
 
     @ToString.Exclude
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", unique = true)
     private Location location;
 
