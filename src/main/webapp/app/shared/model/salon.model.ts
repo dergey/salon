@@ -1,4 +1,4 @@
-import { ILocation } from 'app/shared/model/location.model';
+import { ILocation, ILocationRequest } from 'app/shared/model/location.model';
 
 export interface ISalon {
   id?: number;
@@ -8,7 +8,7 @@ export interface ISalon {
 
 export interface ISalonRequest {
   title?: string;
-  locationId?: number;
+  location?: ILocationRequest;
 }
 
-export const defaultValue: Readonly<ISalon> = { location: {} };
+export const defaultValue: Readonly<ISalon> = { location: { country: {} } };

@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Label, Row } from 'reactstrap';
-import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { AvField, AvForm, AvGroup } from 'availity-reactstrap-validation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
+import { getEntities as getCountries } from 'app/entities/country/country.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './salon.reducer';
 import { ISalon, ISalonRequest } from 'app/shared/model/salon.model';
+import { LocationIntegrated } from "app/entities/location/location-integrated";
 
 export interface ISalonUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -40,6 +42,7 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
     }
 
     this.props.getLocations();
+    this.props.getCountries();
   }
 
   saveEntity = (event, errors, values) => {
@@ -64,12 +67,18 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
   toRequestEntity = (entity: ISalon) => {
     return {
       title: entity.title,
-      locationId: entity.location.id
+      location: {
+        address: entity.location.address,
+        postalCode: entity.location.postalCode,
+        city: entity.location.city,
+        stateProvince: entity.location.stateProvince,
+        countryCode: entity.location.country.code
+      }
     } as ISalonRequest;
   };
 
   render() {
-    const { salonEntity, locations, loading, updating } = this.props;
+    const { salonEntity, countries, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -98,19 +107,7 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
                     }}
                   />
                 </AvGroup>
-                <AvGroup>
-                  <Label for="salon-location">Адрес</Label>
-                  <AvInput id="salon-location" type="select" className="form-control" name="locationId">
-                    <option value="" key="0" />
-                    {locations
-                      ? locations.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.country.name + ', ' + otherEntity.city + ', ' + otherEntity.address}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
+                <LocationIntegrated isNew={isNew} rootNodeName={"location"} countries={countries} />
                 <Button tag={Link} id="cancel-save" to="/salon" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
@@ -131,6 +128,7 @@ export class SalonUpdate extends React.Component<ISalonUpdateProps, ISalonUpdate
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  countries: storeState.country.entities,
   locations: storeState.location.entities,
   salonEntity: storeState.salon.entity,
   loading: storeState.salon.loading,
@@ -140,6 +138,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getLocations,
+  getCountries,
   getEntity,
   updateEntity,
   createEntity,

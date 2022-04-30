@@ -11,11 +11,11 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity,
-  reset
+  reset,
+  updateEntity
 } from 'app/entities/employee/employee.reducer';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { IEmployee, defaultValue } from 'app/shared/model/employee.model';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
+import { defaultValue, IEmployee } from 'app/shared/model/employee.model';
 import { defaultScheduleValue } from 'app/shared/model/employee.schedule.model';
 
 describe('Entities reducer tests', () => {
@@ -256,7 +256,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject
         }
       ];
-      await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
+      await store.dispatch(updateEntity(1, { salonId: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.DELETE_EMPLOYEE actions', async () => {
